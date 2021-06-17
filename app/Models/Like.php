@@ -10,11 +10,11 @@ class Like extends Model
 {
     use HasFactory;
 
-    function users() {
+    function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    function posts() {
+    function post() {
         return $this->belongsTo(Post::class, 'post_id');
     }
 }
