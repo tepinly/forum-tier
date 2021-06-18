@@ -63,7 +63,7 @@ class PostController extends Controller
         $post->delete();
 
         return response()->json([
-            'body' => 'Post deleted.'
+            'body' => 'Thread deleted.'
         ], 200);
     }
 }

@@ -135,7 +135,7 @@
 
         function deletePost() {
             $("#delete").html(`
-                        <p>Deleting your post is irreversible, confirm your deletion</p>
+                        <p>This will delete the entire thread, it's an irreversible action</p>
                         <button class="update-btn" onclick="cancelDeletePost()">Cancel</button>
                         <button class="update-btn" onclick="destroyPost()">Confirm</button>
                     `);
