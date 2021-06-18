@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Like;
 
 class PostController extends Controller
 {
@@ -35,9 +36,13 @@ class PostController extends Controller
     }
 
     public function show($id) {
+        $post = Post::find($id);
+        $user = Auth::user();
+        $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
         return view('posts.show', [
-            'post' => Post::find($id),
-            'user' => Auth::user()
+            'post' => $post,
+            'user' => $user,
+            'liked' => $liked
         ]);
     }
 
@@ -64,6 +69,32 @@ class PostController extends Controller
 
         return response()->json([
             'body' => 'Thread deleted.'
+        ], 200);
+    }
+
+    public function like(Request $request) {
+        $post = Post::find($request->id);
+        $user = Auth::user();
+        if(!Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id])) {
+            $like = new Like;
+            $like->post_id = $post->id;
+            $like->user_id = $user->id;
+            $like->save();
+            $post->likes += 1;
+            $post->save();
+
+            return response()->json([
+                'liked' => true
+            ], 200);
+        }
+
+        $like = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]);
+        $like->delete();
+        $post->likes -= 1;
+        $post->save();
+
+        return response()->json([
+            'liked' => false
         ], 200);
     }
 }

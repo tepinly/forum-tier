@@ -36,6 +36,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     // Destroy Post
     Route::post('/posts/{post_id}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
+
+    // Like Post
+    Route::post('/posts/{post_id}/like', [PostController::class, 'like'])->name('post.like');
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');

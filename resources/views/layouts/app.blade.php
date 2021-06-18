@@ -11,12 +11,19 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+        integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+        crossorigin="anonymous"
+    />
 </head>
 <body>
     <div id="app">
@@ -78,69 +85,6 @@
             @yield('content')
         </main>
     </div>
-    <script>
-        function updatePost() {
-            const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            const postId = document.getElementById('id').value;
-            const postBody = document.getElementById('body').value;
-
-            $.ajax({
-                type: "POST",
-                url: `/posts/${postId}`,
-                data: {_token: CSRF_TOKEN, id: postId, body: postBody},
-                success: function (data) {
-                    $("#post-body").html(data.body);
-                    $("#edit").html(`
-                        <button onclick="editPost()">Edit</button>
-                    `);
-                },
-                error: function(e) {
-                    console.log(e.responseText);
-                }
-            });
-        }
-
-        function editPost() {
-            const postBody = document.getElementById('post-body').innerHTML;
-            $("#edit").html(`
-                        <input type="text" name="body" id="body" value="${postBody}">
-                        <button class="update-btn" onclick="updatePost()">Finish</button>
-                    `);
-        }
-
-        function destroyPost() {
-            const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            const postId = document.getElementById('id').value;
-
-            $.ajax({
-                type: "post",
-                url: `/posts/${postId}/destroy`,
-                data: {_token: CSRF_TOKEN, id: postId},
-                success: function (data) {
-                    $("#post-body").parent().html(`<h1>${data.body}</h1>
-                        <form action="/posts"><button type="submit">Back to posts</button></form>
-                    `);
-                },
-                error: function(e) {
-                    console.log(e.responseText);
-                }
-            });
-        }
-
-        function cancelDeletePost() {
-            $("#delete").html(`
-                        <button onclick="deletePost()">Delete</button>
-                    `);
-        }
-
-        function deletePost() {
-            $("#delete").html(`
-                        <p>This will delete the entire thread, it's an irreversible action</p>
-                        <button class="update-btn" onclick="cancelDeletePost()">Cancel</button>
-                        <button class="update-btn" onclick="destroyPost()">Confirm</button>
-                    `);
-        }
-    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>
