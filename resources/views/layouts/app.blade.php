@@ -107,6 +107,39 @@
                         <button class="update-btn" onclick="updatePost()">Finish</button>
                     `);
         }
+
+        function destroyPost() {
+            const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            const postId = document.getElementById('id').value;
+
+            $.ajax({
+                type: "post",
+                url: `/posts/${postId}/destroy`,
+                data: {_token: CSRF_TOKEN, id: postId},
+                success: function (data) {
+                    $("#post-body").parent().html(`<h1>${data.body}</h1>
+                        <form action="/posts"><button type="submit">Back to posts</button></form>
+                    `);
+                },
+                error: function(e) {
+                    console.log(e.responseText);
+                }
+            });
+        }
+
+        function cancelDeletePost() {
+            $("#delete").html(`
+                        <button onclick="deletePost()">Delete</button>
+                    `);
+        }
+
+        function deletePost() {
+            $("#delete").html(`
+                        <p>Deleting your post is irreversible, confirm your deletion</p>
+                        <button class="update-btn" onclick="cancelDeletePost()">Cancel</button>
+                        <button class="update-btn" onclick="destroyPost()">Confirm</button>
+                    `);
+        }
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>

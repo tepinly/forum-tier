@@ -24,14 +24,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth']], function() {
     // Create Post
-    Route::get('/posts/create', [PostController::class, 'create'])->name('post_create');
-    Route::post('/posts', [PostController::class, 'store'])->name('post_store');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('post.store');
 
-    // Edit Post
-    Route::get('/posts/{post_id}/edit', [PostController::class, 'edit'])->name('post_edit');
-    Route::post('/posts/{post_id}', [PostController::class, 'update'])->name('post_update');
+    // Read Post
+    Route::get('/posts/{id}', [PostController::class, 'show'])->name('post');
+
+    // Update Post
+    Route::get('/posts/{post_id}/edit', [PostController::class, 'edit'])->name('post.edit');
+    Route::post('/posts/{post_id}', [PostController::class, 'update'])->name('post.update');
+
+    // Destroy Post
+    Route::post('/posts/{post_id}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
-Route::get('/posts/user/{user_id}', [PostController::class, 'userPosts'])->name('posts_user');
-Route::get('/posts/{id}', [PostController::class, 'show'])->name('post');
+Route::get('/posts/user/{user_id}', [PostController::class, 'userPosts'])->name('posts.user');

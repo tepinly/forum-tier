@@ -57,4 +57,13 @@ class PostController extends Controller
             'user' => Auth::user()
         ], 200);
     }
+
+    public function destroy(Request $request) {
+        $post = Post::find($request->id);
+        $post->delete();
+
+        return response()->json([
+            'body' => 'Post deleted.'
+        ], 200);
+    }
 }
