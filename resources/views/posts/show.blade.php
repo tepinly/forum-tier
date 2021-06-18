@@ -2,7 +2,7 @@
 
 @section('content')
         <h1 id="title">{{ $post->title }}</h1>
-        <h5 id="author">By {{ $post->user->name }}</h5>
+        <h5 id="author">By {{ $post->user->name . ' - ' . $post->created_at->diffForHumans() }}</h5>
         <p id="post-body">{{ $post->body }}</p>
         <input type="hidden" name="id" id="id" value="{{ $post->id }}">
         
@@ -16,12 +16,32 @@
         @endif
 
         <div class="likes">
-            <button id="like-btn" onclick="likePost()">
+            <button class="btn btn-danger" id="like-btn" onclick="likePost()">
             @if ($liked) <i class="fas fa-heart"></i>
             @else <i class="far fa-heart"></i>
             @endif
-            </button><label for="like-btn">{{ $post->likes }}</label>
+            </button><label for="like-btn" id="likeCount">{{ $post->likes }}</label>
         </div>
+
+        <div id="addComment">
+            <textarea name="comment-body" id="comment-body" cols="50" rows="5"></textarea>
+            <button onclick="commentPost()">Comment</button>
+        </div>
+
+        <div class="commentList">
+            @foreach ($comments as $comment)
+                <div class="comment">
+                    <div class="comment-header">
+                        <img width="40px" src="{{ asset($comment->user->avatar) }}" alt="{{ $comment->user->name.'\'s avatar' }}">
+                        <p>{{ $comment->user->name . ' - ' . $comment->created_at->diffForHumans() }}</p>
+                    </div>
+                    <p>
+                        {{ $comment->body }}
+                    </p>
+                </div>
+            @endforeach
+        </div>
+        {{ $comments->links() }}
 
         <script>
             function getToken() {
@@ -54,7 +74,7 @@
                 const postBody = document.getElementById('post-body').innerHTML;
                 $("#edit").html(`
                             <input type="text" name="body" id="body" value="${postBody}">
-                            <button class="update-btn" onclick="updatePost()">Finish</button>
+                            <button class="update-btn" onclick="updatePost()">Done</button>
                         `);
             }
     
@@ -101,6 +121,7 @@
                     url: `/posts/${postId}/like`,
                     data: {_token: getToken(), id: postId},
                     success: function (data) {
+                        $('#likeCount').html(`${data.likeCount}`)
                         if(data.liked === true) {
                             $("#like-btn").html(`
                                 <i class="fas fa-heart"></i>
@@ -111,6 +132,33 @@
                                 <i class="far fa-heart"></i>
                             `);
                         }
+                    },
+                    error: function(e) {
+                        console.log(e.responseText);
+                    }
+                });
+            }
+
+            function commentPost() {
+                const postId = document.getElementById('id').value;
+                const commentBody = document.getElementById('comment-body').value;
+    
+                $.ajax({
+                    type: "post",
+                    url: `/posts/${postId}/comment`,
+                    data: {_token: getToken(), id: postId, body: commentBody},
+                    success: function (data) {
+                        $(".commentList").prepend(`
+                        <div class="comment">
+                            <div class="comment-header">
+                                <img width="40px" src="{{ asset($user->avatar) }}" alt="${data.userName}'s avatar">
+                                <p>${data.userName} - ${data.commentDate}</p>
+                            </div>
+                            <p>
+                                ${data.commentBody}
+                            </p>
+                        </div>
+                        `);
                     },
                     error: function(e) {
                         console.log(e.responseText);

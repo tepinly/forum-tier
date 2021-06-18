@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Like;
+use App\Models\Comment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -39,10 +40,12 @@ class PostController extends Controller
         $post = Post::find($id);
         $user = Auth::user();
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
+        $comments = Comment::where(['user_id' => $user->id, 'post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(10);
         return view('posts.show', [
             'post' => $post,
             'user' => $user,
-            'liked' => $liked
+            'liked' => $liked,
+            'comments' => $comments
         ]);
     }
 
@@ -82,19 +85,36 @@ class PostController extends Controller
             $like->save();
             $post->likes += 1;
             $post->save();
-
-            return response()->json([
-                'liked' => true
-            ], 200);
+            $state = true;
+        }
+        else {
+            $like = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]);
+            $like->delete();
+            $post->likes -= 1;
+            $post->save();
+            $state = false;
         }
 
-        $like = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]);
-        $like->delete();
-        $post->likes -= 1;
-        $post->save();
+        return response()->json([
+            'liked' => $state,
+            'likeCount' => $post->likes
+        ], 200);
+    }
+
+    public function comment(Request $request) {
+        $post = Post::find($request->id);
+        $user = Auth::user();
+
+        $comment = new Comment;
+        $comment->post_id = $post->id;
+        $comment->user_id = $user->id;
+        $comment->body = $request->body;
+        $comment->save();
 
         return response()->json([
-            'liked' => false
+            'commentBody' => $comment->body,
+            'commentDate' => $comment->created_at->diffForHumans(),
+            'userName' => $user->name
         ], 200);
     }
 }
