@@ -28,20 +28,9 @@
             <button onclick="commentPost()">Comment</button>
         </div>
 
-        <div class="commentList">
-            @foreach ($comments as $comment)
-                <div class="comment">
-                    <div class="comment-header">
-                        <img width="40px" src="{{ asset($comment->user->avatar) }}" alt="{{ $comment->user->name.'\'s avatar' }}">
-                        <p>{{ $comment->user->name . ' - ' . $comment->created_at->diffForHumans() }}</p>
-                    </div>
-                    <p>
-                        {{ $comment->body }}
-                    </p>
-                </div>
-            @endforeach
+        <div id="commentList">
+            @include('posts.comments', ['comments' => $comments])
         </div>
-        {{ $comments->links() }}
 
         <script>
             function getToken() {
@@ -148,7 +137,7 @@
                     url: `/posts/${postId}/comment`,
                     data: {_token: getToken(), id: postId, body: commentBody},
                     success: function (data) {
-                        $(".commentList").prepend(`
+                        $(".commentList").append(`
                         <div class="comment">
                             <div class="comment-header">
                                 <img width="40px" src="{{ asset($user->avatar) }}" alt="${data.userName}'s avatar">
@@ -165,5 +154,29 @@
                     }
                 });
             }
+
+            $(document).ready(function(){
+                $(document).on('click', '.page-link', function(event){
+                event.preventDefault(); 
+                var page = $(this).attr('href').split('page=')[1];
+                fetch_data(page);
+                });
+
+                function fetch_data(page)
+                {
+                    const postId = document.getElementById('id').value;
+                    $.ajax({
+                        url:`/posts/${postId}/comments-fetch`,
+                        method:"POST",
+                        data:{_token: getToken(), page:page, id: postId},
+                        success:function(data)
+                        {
+                            console.log(data);
+                            $('#commentList').html(data);
+                        }
+                    });
+                }
+            });
+
         </script>
 @endsection

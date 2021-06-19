@@ -40,7 +40,7 @@ class PostController extends Controller
         $post = Post::find($id);
         $user = Auth::user();
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
-        $comments = Comment::where(['user_id' => $user->id, 'post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(10);
+        $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'ASC')->simplePaginate(5);
         return view('posts.show', [
             'post' => $post,
             'user' => $user,
@@ -116,5 +116,16 @@ class PostController extends Controller
             'commentDate' => $comment->created_at->diffForHumans(),
             'userName' => $user->name
         ], 200);
+    }
+
+    public function commentsFetch(Request $request) {
+        if($request->ajax())
+        {
+            $post = Post::find($request->id);
+            $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'ASC')->simplePaginate(5);
+            return view('posts.comments', [
+                'comments' => $comments
+            ])->render();
+        }
     }
 }
