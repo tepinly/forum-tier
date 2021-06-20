@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserController;
 
 
 Route::get('/', function () {
@@ -34,11 +35,10 @@ Route::group(['middleware' => ['auth']], function() {
 
     // Comment on Post
     Route::post('/posts/{post_id}/comment', [CommentController::class, 'comment'])->name('post.comment');
-
     // Fetch Comments
     Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'commentsFetch'])->name('post.comments.fetch');
 
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
-Route::get('/posts/user/{user_id}', [PostController::class, 'userPosts'])->name('posts.user');
+Route::get('/users/{user_id}', [UserController::class, 'profile'])->name('user.profile');

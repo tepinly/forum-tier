@@ -29,13 +29,6 @@ class PostController extends Controller
         return Post::get();
     }
 
-    public function userPosts($user_id) {
-        if(!User::where('id', $user_id)->exists()) {
-            abort(404, 'User does not exist');
-        }
-        return Post::where('user_id', $user_id)->get();
-    }
-
     public function show($id) {
         $post = Post::find($id);
         $user = Auth::user();
