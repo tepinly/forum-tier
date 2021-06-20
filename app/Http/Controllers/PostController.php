@@ -40,7 +40,7 @@ class PostController extends Controller
         $post = Post::find($id);
         $user = Auth::user();
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
-        $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(6);
+        $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
         return view('posts.show', [
             'post' => $post,
             'user' => $user,
@@ -73,72 +73,5 @@ class PostController extends Controller
         return response()->json([
             'body' => 'Thread deleted.'
         ], 200);
-    }
-
-    public function like(Request $request) {
-        $post = Post::find($request->id);
-        $user = Auth::user();
-        if(!Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id])) {
-            $like = new Like;
-            $like->post_id = $post->id;
-            $like->user_id = $user->id;
-            $like->save();
-            $post->likes += 1;
-            $post->save();
-            $state = true;
-        }
-        else {
-            $like = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]);
-            $like->delete();
-            $post->likes -= 1;
-            $post->save();
-            $state = false;
-        }
-
-        return response()->json([
-            'liked' => $state,
-            'likeCount' => $post->likes
-        ], 200);
-    }
-
-    public function comment(Request $request) {
-        $post = Post::find($request->id);
-        $user = Auth::user();
-
-        $comment = new Comment;
-        $comment->post_id = $post->id;
-        $comment->user_id = $user->id;
-        $comment->body = $request->body;
-        $comment->save();
-
-        return response()->json([
-            'commentBody' => $comment->body,
-            'commentDate' => $comment->created_at->diffForHumans(),
-            'userName' => $user->name
-        ], 200);
-    }
-
-    public function commentsFetch(Request $request) {
-        if($request->ajax())
-        {
-            $post = Post::find($request->id);
-            $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(6, ['*'], 'page', $request->page);
-            $commentList = '';
-            foreach ($comments as $comment) {
-                $commentList .= '
-                            <div class="comment">
-                                <div class="comment-header">
-                                    <img width="40px" src="'. asset($comment->user->avatar) . '" alt=" ' . $comment->user->name . '">
-                                    <p> '. $comment->user->name . ' - ' . $comment->created_at->diffForHumans() . '</p>
-                                </div>
-                                <p>
-                                    ' . $comment->body . '
-                                </p>
-                            </div>
-                            ';
-            }
-
-            return response()->json(['loadedComments' => $commentList]);    
-        }
     }
 }

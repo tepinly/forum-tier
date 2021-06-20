@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CommentController;
 
 
 Route::get('/', function () {
@@ -28,13 +30,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/posts/{post_id}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
 
     // Like Post
-    Route::post('/posts/{post_id}/like', [PostController::class, 'like'])->name('post.like');
+    Route::post('/posts/{post_id}/like', [LikeController::class, 'like'])->name('post.like');
 
     // Comment on Post
-    Route::post('/posts/{post_id}/comment', [PostController::class, 'comment'])->name('post.comment');
+    Route::post('/posts/{post_id}/comment', [CommentController::class, 'comment'])->name('post.comment');
 
     // Fetch Comments
-    Route::post('/posts/{post_id}/comments-fetch/{page}', [PostController::class, 'commentsFetch'])->name('post.comments.fetch');
+    Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'commentsFetch'])->name('post.comments.fetch');
 
 });
 

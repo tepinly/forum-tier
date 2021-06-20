@@ -149,7 +149,7 @@
                     url: `/posts/${postId}/comment`,
                     data: {_token: getToken(), id: postId, body: commentBody},
                     success: function (data) {
-                        $(".commentList").prepend(`
+                        $("#commentList").prepend(`
                         <div class="comment">
                             <div class="comment-header">
                                 <img width="40px" src="{{ asset($user->avatar) }}" alt="${data.userName}'s avatar">
@@ -160,6 +160,7 @@
                             </p>
                         </div>
                         `);
+                        $('#comment-body').val('');
                     },
                     error: function(e) {
                         console.log(e.responseText);
@@ -189,6 +190,10 @@
                         }
                     })
                     .done(function(response) {
+                        if (response.loadedComments.length == 0) {
+                            $('.auto-load').html("You hit the bottom");
+                            return;
+                        }
                         $('.auto-load').hide();
                         $("#commentList").append(response.loadedComments);
                     })
