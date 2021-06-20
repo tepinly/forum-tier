@@ -14,7 +14,7 @@ class UserController extends Controller
             abort(404, 'User does not exist');
         }
 
-        $posts = Post::where('user_id', $user_id)->orderBy('created_at', 'DESC')->simplePaginate(10);
+        $posts = Post::where('user_id', $user_id)->with('comments')->orderBy('created_at', 'DESC')->simplePaginate(10);
         $user = User::firstWhere('id', $user_id);
         $viewData = [
             'posts' => $posts,
