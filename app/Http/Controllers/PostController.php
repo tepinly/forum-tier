@@ -40,7 +40,7 @@ class PostController extends Controller
         $post = Post::find($id);
         $user = Auth::user();
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
-        $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'ASC')->simplePaginate(5);
+        $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(6);
         return view('posts.show', [
             'post' => $post,
             'user' => $user,
@@ -122,10 +122,23 @@ class PostController extends Controller
         if($request->ajax())
         {
             $post = Post::find($request->id);
-            $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'ASC')->simplePaginate(5);
-            return view('posts.comments', [
-                'comments' => $comments
-            ])->render();
+            $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(6, ['*'], 'page', $request->page);
+            $commentList = '';
+            foreach ($comments as $comment) {
+                $commentList .= '
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <img width="40px" src="'. asset($comment->user->avatar) . '" alt=" ' . $comment->user->name . '">
+                                    <p> '. $comment->user->name . ' - ' . $comment->created_at->diffForHumans() . '</p>
+                                </div>
+                                <p>
+                                    ' . $comment->body . '
+                                </p>
+                            </div>
+                            ';
+            }
+
+            return response()->json(['loadedComments' => $commentList]);    
         }
     }
 }

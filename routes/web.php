@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/posts/{post_id}/comment', [PostController::class, 'comment'])->name('post.comment');
 
     // Fetch Comments
-    Route::post('/posts/{post_id}/comments-fetch', [PostController::class, 'commentsFetch'])->name('post.comments.fetch');
+    Route::post('/posts/{post_id}/comments-fetch/{page}', [PostController::class, 'commentsFetch'])->name('post.comments.fetch');
 
 });
 

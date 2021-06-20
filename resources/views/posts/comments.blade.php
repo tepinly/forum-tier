@@ -9,5 +9,3 @@
         </p>
     </div>
 @endforeach
-
-{{ $comments->links() }}
