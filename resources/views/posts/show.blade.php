@@ -171,8 +171,8 @@
 
         $(window).scroll(function() {
             if ($(window).scrollTop() + $(window).height() >= $(document).height()) {
-            page++;
-            infinteLoadMore(page);
+                page++;
+                infinteLoadMore(page);
             }
         });
 
