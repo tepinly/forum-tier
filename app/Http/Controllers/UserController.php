@@ -10,8 +10,9 @@ use App\Models\Post;
 
 class UserController extends Controller
 {
-    public function profile($user_id) {
-        if(!User::where('id', $user_id)->exists()) {
+    public function profile($user_id)
+    {
+        if (!User::where('id', $user_id)->exists()) {
             abort(404, 'User does not exist');
         }
 
@@ -19,33 +20,56 @@ class UserController extends Controller
         $user = User::firstWhere('id', $user_id);
         $friends = Friend::where('user_id', $user->id)->get();
         $friendsOf = Friend::where('friend_id', $user->id)->get();
+        $logged = False;
+
+        if (Auth::check() && $user_id == Auth::user()->id) {
+            $logged = True;
+        }
+
         $viewData = [
             'posts' => $posts,
             'user' => $user,
             'friends' => $friends,
-            'friendsOf' => $friendsOf
+            'friendsOf' => $friendsOf,
+            'logged' => $logged
         ];
-        $logged = False;
-
-        if($user_id === Auth::user()->id) {
-            $logged = True;
-            return view('user.personal', compact('viewData', 'logged'));
-        }
         return view('user.profile', $viewData);
     }
 
-    public function avatarChange(Request $request) {
-        $request->validate([
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+    public function updateAvatar(Request $request)
+    {
 
-        $imageName = time().'.'.$request->avatar->extension();  
+        $folderPath = public_path('img/avatars/');
+        $image_parts = explode(";base64,", $request->image);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $imageName = uniqid() . '.png';
+        $imageFullPath = $folderPath . $imageName;
+        file_put_contents($imageFullPath, $image_base64);
 
-        $request->avatar->move(public_path('img'), $imageName);
         $user = Auth::user();
-        $user->avatar = 'img/' . $imageName;
+        if($user->avatar != 'img/default-avatar.png' && \File::exists(public_path($user->avatar))){
+            \File::delete(public_path($user->avatar));
+        }
+
+        $user->avatar = 'img/avatars/' . $imageName;
         $user->save();
 
-        return back();
+        return response()->json([
+            'success' => 'Crop Image Uploaded Successfully', 
+            'newAvatar' => $user->avatar
+        ]);
+    }
+
+    public function updateBio(Request $request) 
+    {
+        $user = Auth::user();
+        $user->bio = $request->bio;
+        $user->save();
+
+        return response()->json([
+            'bio' => $request->bio
+        ]);
     }
 }

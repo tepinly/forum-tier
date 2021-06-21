@@ -39,8 +39,11 @@ Route::group(['middleware' => ['auth']], function() {
     // Fetch Comments
     Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'commentsFetch'])->name('post.comments.fetch');
 
-    // Change Avatar
-    Route::post('/users/{user_id}/avatar', [UserController::class, 'avatarChange'])->name('user.avatar.change');
+    // Update User Avatar
+    Route::post('/users/{user_id}/avatar', [UserController::class, 'updateAvatar'])->name('user.avatar.update');
+
+    // Updatae User Bio
+    Route::post('/users/{user_id}/bio', [UserController::class, 'updateBio'])->name('user.bio.update');
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
