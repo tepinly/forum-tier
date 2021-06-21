@@ -46,7 +46,7 @@ class User extends Authenticatable
     ];
 
     function friends() {
-        return $this->belongsToMany(Friend::class, 'friend_id');
+        return $this->belongsToMany(User::class, Friend::class, 'user_id', 'friend_id');
     }
 
     function roles() {

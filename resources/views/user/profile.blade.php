@@ -2,8 +2,10 @@
 
 @section('content')
 <div>
-    <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}">
+    <img src="{{ asset($user->avatar) }}" alt="{{ $user->name }}" width="160px">
     <h1>{{ $user->name }}</h1>
+    {{ count($friends) . " Following" }} | 
+    {{ count($friendsOf) . (count($friendsOf) === 1 ? " Follower" : " Followers") }}
     <p>{{ $user->bio }}</p>
 
     <div id="postList">
@@ -11,7 +13,7 @@
         @foreach ($posts as $post)
             <div class=".post">
                 <p>
-                    {{ $post->title }} | {{ $post->created_at->diffForHumans() }} | {{ $post->likes  }} <i class="fas fa-heart"></i><br>
+                    {{ $post->title }} <br>{{ $post->created_at->diffForHumans() }} | {{ $post->likes  }} <i class="fas fa-heart"></i> | 
                     {{ count($post->comments) . (count($post->comments) === 1 ? " Comment" : " Comments") }}
                 </p>
             </div>

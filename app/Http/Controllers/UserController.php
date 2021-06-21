@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Friend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -16,9 +17,13 @@ class UserController extends Controller
 
         $posts = Post::where('user_id', $user_id)->with('comments')->orderBy('created_at', 'DESC')->simplePaginate(10);
         $user = User::firstWhere('id', $user_id);
+        $friends = Friend::where('user_id', $user->id)->get();
+        $friendsOf = Friend::where('friend_id', $user->id)->get();
         $viewData = [
             'posts' => $posts,
-            'user' => $user
+            'user' => $user,
+            'friends' => $friends,
+            'friendsOf' => $friendsOf
         ];
         $logged = False;
 

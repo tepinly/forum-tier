@@ -4,17 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
 class Friend extends Model
 {
     use HasFactory;
 
-    function friends() {
-        return $this->belongsToMany(User::class, 'friend_id');
+    function user() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    function users() {
-        return $this->belongsToMany(User::class, 'user_id');
+    function friend() {
+        return $this->belongsTo(User::class, 'friend_id');
     }
 }
