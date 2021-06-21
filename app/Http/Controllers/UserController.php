@@ -33,4 +33,19 @@ class UserController extends Controller
         }
         return view('user.profile', $viewData);
     }
+
+    public function avatarChange(Request $request) {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $imageName = time().'.'.$request->avatar->extension();  
+
+        $request->avatar->move(public_path('img'), $imageName);
+        $user = Auth::user();
+        $user->avatar = 'img/' . $imageName;
+        $user->save();
+
+        return back();
+    }
 }
