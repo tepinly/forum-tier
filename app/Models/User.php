@@ -10,6 +10,7 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Friend;
 use App\Models\Post;
+use App\Models\Role;
 
 class User extends Authenticatable
 {

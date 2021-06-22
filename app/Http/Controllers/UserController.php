@@ -18,15 +18,21 @@ class UserController extends Controller
 
         $posts = Post::where('user_id', $user_id)->with('comments')->orderBy('created_at', 'DESC')->simplePaginate(10);
         $user = User::firstWhere('id', $user_id);
-        $friends = Friend::where('user_id', $user->id)->get();
-        $friendsOf = Friend::where('friend_id', $user->id)->get();
+        $followings = Friend::where('user_id', $user->id)->get();
+        $followers = Friend::where('friend_id', $user->id)->get();
+        $access = hasAccess($user->id);
+        if (!$access && isFollowing(Auth::user()->id, $user->id))
+            $following = True;
+        else
+            $following = False;      
 
         $viewData = [
             'posts' => $posts,
             'user' => $user,
-            'friends' => $friends,
-            'friendsOf' => $friendsOf,
-            'access' => hasAccess($user->id)
+            'followings' => $followings,
+            'followers' => $followers,
+            'access' => $access,
+            'following' => $following
         ];
         return view('user.profile', $viewData);
     }
@@ -44,7 +50,7 @@ class UserController extends Controller
         file_put_contents($imageFullPath, $image_base64);
 
         $user = Auth::user();
-        if($user->avatar != 'img/default-avatar.png' && \File::exists(public_path($user->avatar))){
+        if ($user->avatar != 'img/default-avatar.png' && \File::exists(public_path($user->avatar))){
             \File::delete(public_path($user->avatar));
         }
 

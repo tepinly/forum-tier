@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FriendController;
 
 
 Route::get('/', function () {
@@ -19,9 +20,6 @@ Route::group(['middleware' => ['auth']], function() {
     // Create Post
     Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/posts', [PostController::class, 'store'])->name('post.store');
-
-    // Read Post
-    Route::get('/posts/{id}', [PostController::class, 'show'])->name('post');
 
     // Update Post
     Route::get('/posts/{post_id}/edit', [PostController::class, 'edit'])->name('post.edit');
@@ -42,12 +40,28 @@ Route::group(['middleware' => ['auth']], function() {
     // Update User Avatar
     Route::post('/users/{user_id}/avatar', [UserController::class, 'updateAvatar'])->name('user.avatar.update');
 
-    // Updatae User Bio
+    // Update User Bio
     Route::post('/users/{user_id}/bio', [UserController::class, 'updateBio'])->name('user.bio.update');
 
-    // Show User Followers
-    Route::get('/users/{user_id}/followers', [FriendController::class, 'followers'])->name('user.followers');
+    // Unfollow User
+    Route::post('/users/{user_id}/unfollow', [FriendController::class, 'unfollow'])->name('user.unfollow');
+    
+    // Follow User
+    Route::post('/users/{user_id}/follow', [FriendController::class, 'follow'])->name('user.follow');
 });
 
+
+// Posts Index
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
+
+// Read Post
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('post');
+
+// User Profile
 Route::get('/users/{user_id}', [UserController::class, 'profile'])->name('user.profile');
+
+// User Followers Index
+Route::get('/users/{user_id}/followers', [FriendController::class, 'followers'])->name('user.followers');
+
+// User Following Index
+Route::get('/users/{user_id}/following', [FriendController::class, 'following'])->name('user.following');

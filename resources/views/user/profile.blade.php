@@ -31,8 +31,8 @@
             <img src={{ asset($user->avatar) }} alt="{{ $user->name }}" width="160px">
         </div>
         <h1>{{ $user->name }}</h1>
-        {{ count($friends) . ' Following' }} |
-        {{ count($friendsOf) . (count($friendsOf) === 1 ? ' Follower' : ' Followers') }}
+        {{ count($followings) }} Following |
+        <span id="followers-count">{{ count($followers) }}</span> Followers
         <p id="bio">{{ $user->bio }}</p>
 
         @if ($access)
@@ -71,6 +71,15 @@
                     </div>
                 </div>
             </div>
+
+        @else
+            <div id="follow-prompt">
+                @if ($following)
+                    <button onclick="unfollow()">Unfollow</button>
+                @else
+                    <button onclick="follow()">Follow</button>
+                @endif
+            </div>
         @endif
 
         <div id="postList">
@@ -93,6 +102,43 @@
         let image = document.getElementById("image");
         let cropper;
         let bio = document.getElementById('bio').innerHTML;
+        const userId = document.getElementById('user_id').value;
+
+        function unfollow() {
+            $.ajax ({
+                type: 'POST',
+                url: `/users/${userId}/unfollow`,
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content"),
+                },
+                success: function(data) {
+                    $('#follow-prompt').html(`
+                        <button onclick="follow()">Follow</button>
+                    `)
+                    $('#followers-count').html(`
+                        ${data.followers}
+                    `)
+                },
+            });
+        }
+
+        function follow() {
+            $.ajax ({
+                type: 'POST',
+                url: `/users/${userId}/follow`,
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content")
+                },
+                success: function(data) {
+                    $('#follow-prompt').html(`
+                        <button onclick="unfollow()">Unfollow</button>
+                    `)
+                    $('#followers-count').html(`
+                        ${data.followers}
+                    `)
+                },
+            });
+        }
 
         function changeAvatar() {
             $('#avatar-change').html(`
@@ -108,7 +154,6 @@
         }
 
         function updateBio() {
-            const userId = document.getElementById('user_id').value;
             const newBio = document.getElementById('bio-change-input').value;
 
             $.ajax({
