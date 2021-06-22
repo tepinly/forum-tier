@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -32,7 +33,7 @@ class CommentController extends Controller
             $post = Post::find($request->id);
             $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5, ['*'], 'page', $request->page);
             if(count($comments) == 0) return response()->json(['loadedComments' => ''], 200);  
-
+            
             $commentList = '';
             foreach ($comments as $comment) {
                 $commentList .= '
