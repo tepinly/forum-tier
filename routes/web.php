@@ -44,6 +44,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     // Updatae User Bio
     Route::post('/users/{user_id}/bio', [UserController::class, 'updateBio'])->name('user.bio.update');
+
+    // Show User Followers
+    Route::get('/users/{user_id}/followers', [FriendController::class, 'followers'])->name('user.followers');
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');

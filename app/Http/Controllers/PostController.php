@@ -38,7 +38,8 @@ class PostController extends Controller
             'post' => $post,
             'user' => $user,
             'liked' => $liked,
-            'comments' => $comments
+            'comments' => $comments,
+            'access' => hasAccess($user->id)
         ]);
     }
 

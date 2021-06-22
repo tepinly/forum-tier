@@ -20,18 +20,13 @@ class UserController extends Controller
         $user = User::firstWhere('id', $user_id);
         $friends = Friend::where('user_id', $user->id)->get();
         $friendsOf = Friend::where('friend_id', $user->id)->get();
-        $logged = False;
-
-        if (Auth::check() && $user_id == Auth::user()->id) {
-            $logged = True;
-        }
 
         $viewData = [
             'posts' => $posts,
             'user' => $user,
             'friends' => $friends,
             'friendsOf' => $friendsOf,
-            'logged' => $logged
+            'access' => hasAccess($user->id)
         ];
         return view('user.profile', $viewData);
     }

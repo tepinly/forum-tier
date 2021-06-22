@@ -4,22 +4,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
     <style type="text/css">
         img {
-        display: block;
-        max-width: 100%;
+            display: block;
+            max-width: 100%;
         }
+
         .preview {
-        overflow: hidden;
-        width: 160px; height: 160px;
-        margin: 10px;
-        border: 1px solid red;
+            overflow: hidden;
+            width: 160px;
+            height: 160px;
+            margin: 10px;
+            border: 1px solid red;
         }
-        .modal-lg{
-        max-width: 1000px !important;
+
+        .modal-lg {
+            max-width: 1000px !important;
         }
+
     </style>
     <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
     <div>
@@ -31,7 +35,7 @@
         {{ count($friendsOf) . (count($friendsOf) === 1 ? ' Follower' : ' Followers') }}
         <p id="bio">{{ $user->bio }}</p>
 
-        @if ($logged)
+        @if ($access)
             <div id="bio-change">
                 <button id="bio-change-button" onclick="changeBio()">Update Bio</button>
             </div>
@@ -99,14 +103,7 @@
         function changeBio() {
             $('#bio-change').html(`
                 <input type="text" name="bio" class="bio" id="bio-change-input" value=${bio}>
-                <button onclick="updateBio()">Update</button>
-                <button onclick="updateBioCancel()">Cancel</button>
-            `)
-        }
-
-        function updateBioCancel() {
-            $('#bio-change').html(`
-                <button id="bio-change-button" onclick="changeBio()">Update Bio</button>
+                <button onclick="updateBio()">Done</button>
             `)
         }
 
@@ -189,7 +186,9 @@
                             image: base64data,
                         },
                         success: function(data) {
-                            $('#avatar').html(`<img src={{ asset('${data.newAvatar}') }} width="160px">`);
+                            $('#avatar').html(
+                                `<img src={{ asset('${data.newAvatar}') }} width="160px">`
+                            );
                             $('#avatar-change').html(`
                                 New avatar updated<br>
                                 <button id="avatar-change-btn" onclick="changeAvatar()">Change Avatar</button>
