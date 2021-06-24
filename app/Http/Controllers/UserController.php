@@ -26,15 +26,7 @@ class UserController extends Controller
         else
             $following = False;      
 
-        $viewData = [
-            'posts' => $posts,
-            'user' => $user,
-            'followings' => $followings,
-            'followers' => $followers,
-            'access' => $access,
-            'following' => $following
-        ];
-        return view('user.profile', $viewData);
+        return view('user.profile', compact('posts', 'user', 'followings', 'followers', 'access', 'following'));
     }
 
     public function updateAvatar(Request $request)
@@ -42,8 +34,6 @@ class UserController extends Controller
 
         $folderPath = public_path('img/avatars/');
         $image_parts = explode(";base64,", $request->image);
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
         $imageName = uniqid() . '.png';
         $imageFullPath = $folderPath . $imageName;

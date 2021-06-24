@@ -8,6 +8,7 @@ use App\Models\Like;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
@@ -26,7 +27,9 @@ class PostController extends Controller
     }
 
     public function index() {
-        return Post::get();
+        $posts = Post::orderBy('created_at', 'DESC')->paginate(10);
+
+        return view('posts.index', compact($posts));
     }
 
     public function show($id) {
@@ -34,13 +37,9 @@ class PostController extends Controller
         $user = Auth::user();
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
         $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
-        return view('posts.show', [
-            'post' => $post,
-            'user' => $user,
-            'liked' => $liked,
-            'comments' => $comments,
-            'access' => hasAccess($user->id)
-        ]);
+        $access = hasAccess($user->id);
+
+        return view('posts.show', compact('post', 'user', 'liked', 'comments', 'access'));
     }
 
     public function edit($id) {
