@@ -85,7 +85,7 @@
         <div id="postList">
             <h3>{{ count($posts) . (count($posts) === 1 ? ' Post' : ' Posts') }}</h3>
             @foreach ($posts as $post)
-                <div class=".post">
+                <div class="post">
                     <p>
                         {{ $post->title }} <br>{{ $post->created_at->diffForHumans() }} | {{ $post->likes }} <i
                             class="fas fa-heart"></i> |
