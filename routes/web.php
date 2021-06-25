@@ -21,6 +21,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/posts', [PostController::class, 'store'])->name('post.store');
 
+    // Read Post
+    Route::get('/posts/{id}', [PostController::class, 'show'])->name('post');
+
     // Update Post
     Route::get('/posts/{post_id}/edit', [PostController::class, 'edit'])->name('post.edit');
     Route::post('/posts/{post_id}', [PostController::class, 'update'])->name('post.update');
@@ -34,7 +37,7 @@ Route::group(['middleware' => ['auth']], function() {
     // Comment on Post
     Route::post('/posts/{post_id}/comment', [CommentController::class, 'comment'])->name('post.comment');
     
-    // Fetch Comments
+    // Fetch Comments Pagination
     Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'commentsFetch'])->name('post.comments.fetch');
 
     // Update User Avatar
@@ -54,8 +57,8 @@ Route::group(['middleware' => ['auth']], function() {
 // Posts Index
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
 
-// Read Post
-Route::get('/posts/{id}', [PostController::class, 'show'])->name('post');
+// Fetch Post Pagination
+Route::post('/posts/fetch/{page}', [PosttController::class, 'postsFetch'])->name('posts.fetch');
 
 // User Profile
 Route::get('/users/{user_id}', [UserController::class, 'profile'])->name('user.profile');

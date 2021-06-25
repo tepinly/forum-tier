@@ -25,13 +25,38 @@ class PostController extends Controller
     }
 
     public function index() {
-        $posts = Post::orderBy('created_at', 'DESC')->paginate(10);
+        $posts = Post::orderBy('created_at', 'DESC')->paginate(5);
 
         return view('posts.index', compact('posts'));
     }
 
+    public function postsFetch($page) {
+        $posts = Post::orderBy('created_at', 'DESC')->paginate(5, ['*'], 'page', $page);
+        if (count($posts) == 0) return response()->json(['loadedPosts' => ''], 200);
+
+        $postList = '';
+
+        foreach($posts as $post) {
+            $postList .= '<div class="post">
+            <div class="post">
+                <h5>' . $post->title . '</h5>
+                <p>
+                    ' . $post->user->name . '<br>' . $post->created_at->diffForHumans() . ' | ' . $post->likes . ' <i
+                        class="fas fa-heart"></i> |
+                    ' . count($post->comments) . (count($post->comments) === 1 ? ' Comment' : ' Comments') . '
+                </p>
+            </div>';
+        }
+
+        return response()->json([
+            'loadedPosts' => $postList
+        ], 200);
+    }
+
     public function show($id) {
         $post = Post::find($id);
+        if ($post === null) return abort(404, 'Post doesn\'t exist');
+
         $user = Auth::user();
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
         $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
