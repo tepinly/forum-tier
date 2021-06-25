@@ -12,12 +12,10 @@ class UserController extends Controller
 {
     public function profile($user_id)
     {
-        if (!User::where('id', $user_id)->exists()) {
-            abort(404, 'User does not exist');
-        }
-
-        $posts = Post::where('user_id', $user_id)->with('comments')->orderBy('created_at', 'DESC')->simplePaginate(10);
         $user = User::firstWhere('id', $user_id);
+        if ($user === null) abort(404, 'User doesn\'t exist');
+        
+        $posts = Post::where('user_id', $user_id)->with('comments')->orderBy('created_at', 'DESC')->simplePaginate(10);
         $followings = Friend::where('user_id', $user->id)->get();
         $followers = Friend::where('friend_id', $user->id)->get();
         $access = hasAccess($user->id);

@@ -32,21 +32,21 @@ class CommentController extends Controller
         {
             $post = Post::find($request->id);
             $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5, ['*'], 'page', $request->page);
-            if(count($comments) == 0) return response()->json(['loadedComments' => ''], 200);  
+            if(count($comments) == 0) return response()->json(['loadedComments' => ''], 200);
             
             $commentList = '';
             foreach ($comments as $comment) {
                 $commentList .= '
-                            <div class="comment">
-                                <div class="comment-header">
-                                    <img width="40px" src="'. asset($comment->user->avatar) . '" alt=" ' . $comment->user->name . '">
-                                    <p> '. $comment->user->name . ' - ' . $comment->created_at->diffForHumans() . '</p>
-                                </div>
-                                <p>
-                                    ' . $comment->body . '
-                                </p>
-                            </div>
-                            ';
+                    <div class="comment">
+                        <div class="comment-header">
+                            <img width="40px" src="'. asset($comment->user->avatar) . '" alt=" ' . $comment->user->name . '">
+                            <p> '. $comment->user->name . ' - ' . $comment->created_at->diffForHumans() . '</p>
+                        </div>
+                        <p>
+                            ' . $comment->body . '
+                        </p>
+                    </div>
+                    ';
             }
 
             return response()->json(['loadedComments' => $commentList], 200);  
