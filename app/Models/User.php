@@ -12,7 +12,7 @@ use App\Models\Friend;
 use App\Models\Post;
 use App\Models\Role;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 

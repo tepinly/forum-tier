@@ -12,11 +12,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth', 'verified']], function () {
     // Create Post
     Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/posts', [PostController::class, 'store'])->name('post.store');
@@ -36,7 +41,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     // Comment on Post
     Route::post('/posts/{post_id}/comment', [CommentController::class, 'comment'])->name('post.comment');
-    
+
     // Fetch Comments Pagination
     Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'commentsFetch'])->name('post.comments.fetch');
 
@@ -48,7 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     // Unfollow User
     Route::post('/users/{user_id}/unfollow', [FriendController::class, 'unfollow'])->name('user.unfollow');
-    
+
     // Follow User
     Route::post('/users/{user_id}/follow', [FriendController::class, 'follow'])->name('user.follow');
 });
