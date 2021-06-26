@@ -14,22 +14,21 @@ class UserController extends Controller
     {
         $user = User::firstWhere('id', $user_id);
         if ($user === null) abort(404, 'User doesn\'t exist');
-        
+
         $posts = Post::where('user_id', $user_id)->with('comments')->orderBy('created_at', 'DESC')->simplePaginate(10);
         $followings = Friend::where('user_id', $user->id)->get();
         $followers = Friend::where('friend_id', $user->id)->get();
-        $access = hasAccess($user->id);
-        if (!$access && isFollowing(Auth::user()->id, $user->id))
+        $access = accessLevel($user->id);
+        if (isFollowing(Auth::user()->id, $user->id))
             $following = True;
         else
-            $following = False;      
+            $following = False;
 
         return view('user.profile', compact('posts', 'user', 'followings', 'followers', 'access', 'following'));
     }
 
     public function updateAvatar(Request $request)
     {
-
         $folderPath = public_path('img/avatars/');
         $image_parts = explode(";base64,", $request->image);
         $image_base64 = base64_decode($image_parts[1]);
@@ -46,12 +45,12 @@ class UserController extends Controller
         $user->save();
 
         return response()->json([
-            'success' => 'Crop Image Uploaded Successfully', 
+            'success' => 'Crop Image Uploaded Successfully',
             'newAvatar' => $user->avatar
         ]);
     }
 
-    public function updateBio(Request $request) 
+    public function updateBio(Request $request)
     {
         $user = Auth::user();
         $user->bio = $request->bio;

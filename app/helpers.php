@@ -1,15 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Friend;
-
-if (!function_exists('hasAccess')) {
-    function hasAccess($user_id) {
-        if (Auth::check() && $user_id == Auth::user()->id) return True;
-        return False;
-    }
-}
 
 if (!function_exists('isFollowing')) {
     function isFollowing($user_id, $friend_id) {
@@ -17,5 +9,16 @@ if (!function_exists('isFollowing')) {
         if(!is_null($following))
             return $following;
         return False;
+    }
+}
+
+// 0 -> User | 1 -> Admin | 2 -> Moderator | 3 -> Author
+if (!function_exists('accessLevel')) {
+    function accessLevel($user_id) {
+        $user = User::firstWhere('id', $user_id);
+        if ($user->roles->first() != null) $access = $user->roles->first()->id;
+        elseif ($post->user_id == $user->id) $access = 3;
+        else $access = 0;
+        return $access;
     }
 }

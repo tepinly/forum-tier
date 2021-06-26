@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Like;
-use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,9 +60,7 @@ class PostController extends Controller
         $user = Auth::user();
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
         $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
-        if ($user->roles->first() != null) $access = $user->roles->first()->id;
-        elseif ($post->user_id == $user->id) $access = 3;
-        else $access = 0;
+        $access =accessLevel($user->id);
 
         return view('posts.show', compact('post', 'user', 'liked', 'comments', 'access'));
     }
