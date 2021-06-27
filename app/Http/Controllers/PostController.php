@@ -60,7 +60,7 @@ class PostController extends Controller
         $user = User::firstWhere('id', $request->user_id);
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
         $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
-        $access =accessLevel($user, $post);
+        $access =accessLevel($user->id, $post);
 
         return view('posts.show', compact('post', 'user', 'liked', 'comments', 'access'));
     }

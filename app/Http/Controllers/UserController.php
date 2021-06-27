@@ -18,7 +18,7 @@ class UserController extends Controller
         $posts = Post::where('user_id', $user_id)->with('comments')->orderBy('created_at', 'DESC')->simplePaginate(10);
         $followings = Friend::where('user_id', $user->id)->get();
         $followers = Friend::where('friend_id', $user->id)->get();
-        $access = accessLevel(Auth::user());
+        $access = accessLevel(Auth::user()->id);
         if (isFollowing(Auth::user()->id, $user->id))
             $following = True;
         else
