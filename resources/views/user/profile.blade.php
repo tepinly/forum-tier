@@ -26,7 +26,7 @@
 
     </style>
     <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-    <div>
+    <div class="profile-page">
         <div id="avatar">
             <img src={{ asset($user->avatar) }} alt="{{ $user->name }}" width="160px">
         </div>
@@ -35,13 +35,29 @@
         <span id="followers-count">{{ count($followers) }}</span> Followers
         <p id="bio">{{ $user->bio }}</p>
 
-        @if ($access)
+        @if($access < 3)
+            <div id="follow-prompt">
+                @if ($following)
+                    <button onclick="unfollow()">Unfollow</button>
+                @else
+                    <button onclick="follow()">Follow</button>
+                @endif
+            </div>
+        @endif
+
+        @if ($access > 0)
             <div id="bio-change">
-                <button id="bio-change-button" onclick="changeBio()">Update Bio</button>
+                <button onclick="changeBio()">Update Bio</button>
             </div>
             <div id="avatar-change">
-                <button id="avatar-change-btn" onclick="changeAvatar()">Change Avatar</button>
+                <button onclick="changeAvatar()">Change Avatar</button>
             </div>
+
+            @if ($access == 1)
+            <div id="terminate-account">
+                <button onclick="terminatePrompt()">Terminate</button>
+            </div>
+            @endif
 
             <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
@@ -71,15 +87,6 @@
                     </div>
                 </div>
             </div>
-
-        @else
-            <div id="follow-prompt">
-                @if ($following)
-                    <button onclick="unfollow()">Unfollow</button>
-                @else
-                    <button onclick="follow()">Follow</button>
-                @endif
-            </div>
         @endif
 
         <div id="postList">
@@ -103,6 +110,35 @@
         let cropper;
         let bio = document.getElementById('bio').innerHTML;
         const userId = document.getElementById('user_id').value;
+
+        function terminatePrompt() {
+            $('#terminate-account').html(`
+                Account termination is irreversible.<br>
+                <button onclick="terminateConfirm()">Confirm</button>
+                <button onclick="terminateCancel()">Cancel</button>
+            `)
+        }
+
+        function terminateCancel() {
+            $('#terminate-account').html(`
+                <button onclick="terminatePrompt()">Terminate</button>
+            `)
+        }
+
+        function terminateConfirm() {
+            $.ajax ({
+                type: 'POST',
+                url: `/users/${userId}/delete`,
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content"),
+                },
+                success: function(data) {
+                    $('.profile-page').html(`
+                        Account terminated.
+                    `)
+                },
+            });
+        }
 
         function unfollow() {
             $.ajax ({
@@ -236,7 +272,7 @@
                             );
                             $('#avatar-change').html(`
                                 New avatar updated<br>
-                                <button id="avatar-change-btn" onclick="changeAvatar()">Change Avatar</button>
+                                <button onclick="changeAvatar()">Change Avatar</button>
                             `);
                             $modal.modal('hide');
                         },

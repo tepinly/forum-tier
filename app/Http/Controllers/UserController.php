@@ -18,7 +18,7 @@ class UserController extends Controller
         $posts = Post::where('user_id', $user_id)->with('comments')->orderBy('created_at', 'DESC')->simplePaginate(10);
         $followings = Friend::where('user_id', $user->id)->get();
         $followers = Friend::where('friend_id', $user->id)->get();
-        $access = accessLevel($user->id);
+        $access = accessLevel(Auth::user());
         if (isFollowing(Auth::user()->id, $user->id))
             $following = True;
         else
@@ -36,7 +36,7 @@ class UserController extends Controller
         $imageFullPath = $folderPath . $imageName;
         file_put_contents($imageFullPath, $image_base64);
 
-        $user = Auth::user();
+        $user = User::firstWhere('id', $request->user_id);
         if ($user->avatar != 'img/default-avatar.png' && \File::exists(public_path($user->avatar))){
             \File::delete(public_path($user->avatar));
         }
@@ -52,12 +52,21 @@ class UserController extends Controller
 
     public function updateBio(Request $request)
     {
-        $user = Auth::user();
+        $user = User::firstWhere('id', $request->user_id);
         $user->bio = $request->bio;
         $user->save();
 
         return response()->json([
             'bio' => $request->bio
         ]);
+    }
+
+    public function delete($user_id) {
+        $user = User::firstWhere('id', $user_id);
+        $user->delete();
+
+        return response()->json([
+            'body' => 'Account deleted.'
+        ], 200);
     }
 }

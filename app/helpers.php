@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use App\Models\Friend;
 
 if (!function_exists('isFollowing')) {
@@ -12,12 +11,11 @@ if (!function_exists('isFollowing')) {
     }
 }
 
-// 0 -> User | 1 -> Admin | 2 -> Moderator | 3 -> Author
+// 0 -> User | 1 -> Admin | 2 -> Moderator |3 -> Author
 if (!function_exists('accessLevel')) {
-    function accessLevel($user_id) {
-        $user = User::firstWhere('id', $user_id);
+    function accessLevel($user, $post = null, $comment = null) {
         if ($user->roles->first() != null) $access = $user->roles->first()->id;
-        elseif ($post->user_id == $user->id) $access = 3;
+        elseif ( ($post != null && $post->user_id == $user->id) || ($comment != null && $comment->user_id == $user->id) ) $access = 3;
         else $access = 0;
         return $access;
     }
