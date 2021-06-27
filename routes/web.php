@@ -45,6 +45,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // Fetch Comments Pagination
     Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'commentsFetch'])->name('post.comments.fetch');
 
+    
+    // User Profile
+    Route::get('/users/{user_id}', [UserController::class, 'profile'])->name('user.profile');
+    
     // Update User Avatar
     Route::post('/users/{user_id}/avatar', [UserController::class, 'updateAvatar'])->name('user.avatar.update');
 
@@ -64,9 +68,6 @@ Route::get('/posts', [PostController::class, 'index'])->name('posts');
 
 // Fetch Post Pagination
 Route::post('/posts/fetch/{page}', [PosttController::class, 'postsFetch'])->name('posts.fetch');
-
-// User Profile
-Route::get('/users/{user_id}', [UserController::class, 'profile'])->name('user.profile');
 
 // User Followers Index
 Route::get('/users/{user_id}/followers', [FriendController::class, 'followers'])->name('user.followers');
