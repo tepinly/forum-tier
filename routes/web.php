@@ -22,6 +22,7 @@ Route::get('/email/verify', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
+
     // Create Post
     Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/posts', [PostController::class, 'store'])->name('post.store');
@@ -45,7 +46,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // Fetch Comments Pagination
     Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'commentsFetch'])->name('post.comments.fetch');
 
-    
+
     // User Profile
     Route::get('/users/{user_id}', [UserController::class, 'profile'])->name('user.profile');
     

@@ -12,7 +12,7 @@ if (!function_exists('isFollowing')) {
     }
 }
 
-// 0 -> User | 1 -> Admin | 2 -> Moderator |3 -> Author
+// 0 -> User | 1 -> Admin | 2 -> Moderator | 3 -> Author
 if (!function_exists('accessLevel')) {
     function accessLevel($user_id, $post = null, $comment = null) {
         $user = User::firstWhere('id', $user_id);
