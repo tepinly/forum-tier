@@ -41,10 +41,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/posts/{post_id}/like', [LikeController::class, 'like'])->name('post.like');
 
     // Comment on Post
-    Route::post('/posts/{post_id}/comment', [CommentController::class, 'comment'])->name('post.comment');
+    Route::post('/posts/{post_id}/comment', [CommentController::class, 'create'])->name('post.comment');
+
+    // Update Comment
+    Route::post('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'update'])->name('update.comment');
 
     // Fetch Comments Pagination
-    Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'commentsFetch'])->name('post.comments.fetch');
+    Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'fetch'])->name('post.comments.fetch');
 
 
     // User Profile

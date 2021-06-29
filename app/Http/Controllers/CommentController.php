@@ -10,7 +10,7 @@ use App\Models\User;
 
 class CommentController extends Controller
 {
-    public function comment(Request $request) {
+    public function create(Request $request) {
         $post = Post::find($request->id);
         $user = Auth::user();
 
@@ -27,7 +27,7 @@ class CommentController extends Controller
         ], 200);
     }
 
-    public function commentsFetch(Request $request) {
+    public function fetch(Request $request) {
         if($request->ajax())
         {
             $post = Post::find($request->id);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Like;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,7 +58,7 @@ class PostController extends Controller
         $post = Post::find($id);
         if ($post === null) return abort(404, 'Post doesn\'t exist');
 
-        $user = User::firstWhere('id', $request->user_id);
+        $user = User::firstWhere('id', $post->user->id);
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
         $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
         $access =accessLevel($user->id, $post);
