@@ -31,7 +31,7 @@
     </div>
 
     <div id="commentList">
-        @include('posts.comments', ['comments' => $comments])
+        @include('posts.comments', ['comments' => $comments, 'access' => $access])
     </div>
 
     {{-- Data Loader --}}
@@ -74,9 +74,10 @@
         function editPost() {
             const postBody = document.getElementById('post-body').innerHTML;
             $("#edit").html(`
-                        <input type="text" name="body" id="body" value="${postBody}">
-                        <button class="update-btn" onclick="updatePost()">Done</button>
-                    `);
+                <textarea type="text" name="body" id="body">${postBody}</textarea>
+                <button class="update-btn" onclick="updatePost()">Done</button>
+            `);
+            $("#post-body").html(``)
         }
 
         function destroyPost() {

@@ -43,8 +43,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // Comment on Post
     Route::post('/posts/{post_id}/comment', [CommentController::class, 'create'])->name('post.comment');
 
-    // Update Comment
-    Route::post('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'update'])->name('update.comment');
+    // Delete Comment
+    Route::post('/posts/{post_id}/comments/{comment_id}', [CommentController::class, 'delete'])->name('delete.comment');
 
     // Fetch Comments Pagination
     Route::post('/posts/{post_id}/comments-fetch/{page}', [CommentController::class, 'fetch'])->name('post.comments.fetch');

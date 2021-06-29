@@ -36,7 +36,7 @@ class CommentController extends Controller
             $commentList = '';
             foreach ($comments as $comment) {
                 $commentList .= '
-                    <div class="comment">
+                    <div class="comment" id="' . $comment->id . '">
                         <div class="comment-header">
                             <img width="40px" src="'. asset($comment->user->avatar) . '" alt=" ' . $comment->user->name . '">
                             <p> '. $comment->user->name . ' - ' . $comment->created_at->diffForHumans() . '</p>
@@ -50,5 +50,14 @@ class CommentController extends Controller
 
             return response()->json(['loadedComments' => $commentList], 200);  
         }
+    }
+
+    function delete(Request $request) {
+        $comment = Comment::firstWhere('id', $request->comment_id);
+        $comment->delete();
+
+        return response()->json([
+            'comment' => 'Deleted'
+        ], 200);
     }
 }
