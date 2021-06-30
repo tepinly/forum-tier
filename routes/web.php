@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikeController;
@@ -66,6 +67,9 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/users/{user_id}/follow', [FriendController::class, 'follow'])->name('user.follow');
 });
 
+Route::group(['middleware' => ['auth', 'verified', 'admin']], function () {
+    Route::get('/admin', [AdminController::class, 'controlPanel'])->name('admin.control.panel');
+});
 
 // Posts Index
 Route::get('/posts', [PostController::class, 'index'])->name('posts');

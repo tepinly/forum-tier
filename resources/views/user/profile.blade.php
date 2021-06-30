@@ -45,6 +45,7 @@
             </div>
         @endif
 
+        {{-- Edit profile --}}
         @if ($access > 0)
             <div id="bio-change">
                 <button onclick="changeBio()">Update Bio</button>
@@ -89,6 +90,7 @@
             </div>
         @endif
 
+        {{-- Post list --}}
         <div id="postList">
             <h3>{{ count($posts) . (count($posts) === 1 ? ' Post' : ' Posts') }}</h3>
             @foreach ($posts as $post)

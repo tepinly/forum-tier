@@ -32,7 +32,7 @@ class CommentController extends Controller
             $post = Post::find($request->id);
             $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5, ['*'], 'page', $request->page);
             if(count($comments) == 0) return response()->json(['loadedComments' => ''], 200);
-            
+
             $commentList = '';
             foreach ($comments as $comment) {
                 $commentList .= '
@@ -47,7 +47,6 @@ class CommentController extends Controller
                     </div>
                     ';
             }
-
             return response()->json(['loadedComments' => $commentList], 200);  
         }
     }
