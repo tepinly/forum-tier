@@ -20,7 +20,7 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [PostController::class, 'index'])->name('posts');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
