@@ -10009,6 +10009,10 @@ h3 {
   outline: 0;
 }
 
+main, html {
+  background-color: #F8EFD4;
+}
+
 .card {
   background-color: #EDC988;
   border: 0;
