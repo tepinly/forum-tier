@@ -1,6 +1,3 @@
-// Body
-$body-bg: #f8fafc;
-
 // Typography
 $font-family-sans-serif: 'Poppins', sans-serif;
 $font-size-base: .9rem;
@@ -17,4 +14,17 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
-$beige: #f5f5dc;
+
+$palette-1: #F8EFD4;
+$palette-2: #EDC988;
+$palette-3: #D7385E;
+$palette-4: #132743;
+
+// Bootstrap
+$dark: $palette-4;
+$light: $palette-2;
+$primary: $palette-3;
+
+// Body
+$body-bg: $palette-1;
+$body-color: $palette-4;
