@@ -10016,3 +10016,7 @@ h3 {
   margin: 0 auto;
   padding: 0.2rem 0.1rem;
 }
+
+.card-header {
+  border-bottom: 0.1rem solid #132743;
+}

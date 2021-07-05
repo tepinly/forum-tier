@@ -32,7 +32,7 @@
         <nav class="navbar navbar-expand navbar-dark">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    <img src="{{ asset('img/ForumTier.svg') }}" width="180rem" height="55rem" style="object-fit: cover" alt="" srcset="">
+                    <img src="{{ asset('img/ForumTier.svg') }}" width="150rem" height="45rem" style="object-fit: cover" alt="" srcset="">
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
