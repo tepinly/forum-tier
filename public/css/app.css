@@ -10024,3 +10024,22 @@ main, html {
 .card-header {
   border-bottom: 0.1rem solid #132743;
 }
+
+.dropdown-menu {
+  background-color: #132743;
+  border: 0;
+  border-radius: 0.1rem;
+  -webkit-border-radius: 0.1rem;
+  -moz-border-radius: 0.1rem;
+  -ms-border-radius: 0.1rem;
+  -o-border-radius: 0.1rem;
+}
+
+.dropdown-item {
+  color: #F8EFD4;
+}
+
+.dropdown-item:hover {
+  background-color: #D7385E;
+  color: #F8EFD4;
+}
