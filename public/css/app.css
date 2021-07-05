@@ -10023,6 +10023,8 @@ main, html {
 
 .card-header {
   border-bottom: 0.1rem solid #132743;
+  color: #132743;
+  background-color: #EDC988;
 }
 
 .dropdown-menu {
@@ -10042,4 +10044,13 @@ main, html {
 .dropdown-item:hover {
   background-color: #D7385E;
   color: #F8EFD4;
+}
+
+.post {
+  padding: 0;
+}
+
+.post .card-header {
+  background-color: #132743;
+  color: #D7385E;
 }

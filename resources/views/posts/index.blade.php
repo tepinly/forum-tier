@@ -3,13 +3,19 @@
 @section('content')
     <div id="postList">
         @foreach ($posts as $post)
-            <div class="post">
-                <h5>{{ $post->title }}</h5>
-                <p>
-                    {{ $post->user->name }}<br>{{ $post->created_at->diffForHumans() }} | {{ $post->likes }} <i
-                        class="fas fa-heart"></i> |
-                    {{ count($post->comments) . (count($post->comments) === 1 ? ' Comment' : ' Comments') }}
-                </p>
+            <div class="post card">
+                <a href="{{ route('post.show', ['id' => $post->id]) }}">
+                    <div class="card-header">
+                        <h5>{{ $post->title }}</h5>
+                    </div>
+                </a>
+                <div class="card-body">
+                    <p>
+                        By <a href="{{ route('user.profile', ['user_id' => $post->user->id]) }}" style="color: gray">{{ $post->user->name }}</a>
+                         - {{ $post->created_at->diffForHumans() }} <br> {{ $post->likes }} <i class="fas fa-heart"></i> |
+                        {{ count($post->comments) . (count($post->comments) === 1 ? ' Comment' : ' Comments') }}
+                    </p>
+                </div>
             </div>
         @endforeach
     </div>

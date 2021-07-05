@@ -28,6 +28,8 @@ main, html {
 
 .card-header {
     border-bottom: .1rem solid $palette-4;
+    color: $palette-4;
+    background-color: $palette-2;
 }
 
 .dropdown-menu {
@@ -47,4 +49,13 @@ main, html {
 .dropdown-item:hover {
     background-color: $palette-3;
     color: $palette-1;
+}
+
+.post {
+    padding: 0;
+}
+
+.post .card-header {
+    background-color: $palette-4;
+    color: $palette-3;
 }

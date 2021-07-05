@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/posts', [PostController::class, 'store'])->name('post.store');
     
     // Read Post
-    Route::get('/posts/{id}', [PostController::class, 'show'])->name('post');
+    Route::get('/posts/{id}', [PostController::class, 'show'])->name('post.show');
     
     // Update Post
     Route::get('/posts/{post_id}/edit', [PostController::class, 'edit'])->name('post.edit');
