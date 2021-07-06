@@ -2,6 +2,9 @@
 
 @section('content')
     <div id="postList">
+        <div class="new-post-btn">
+            <a href="{{ route('post.create') }}" class="btn">Write your post</a>
+        </div>
         @foreach ($posts as $post)
             <div class="post card">
                 <a href="{{ route('post.show', ['id' => $post->id]) }}">
@@ -18,6 +21,7 @@
                 </div>
             </div>
         @endforeach
+        {{ $posts->links() }}
     </div>
 
     <script>

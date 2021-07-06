@@ -1,33 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 id="title">{{ $post->title }}</h1>
-    <h5 id="author">By {{ $post->user->name . ' - ' . $post->created_at->diffForHumans() }}</h5>
-    <p id="post-body">{{ $post->body }}</p>
-    <input type="hidden" name="id" id="id" value="{{ $post->id }}">
+    <div id="post-container" class="d-inline-block">
+        <h1 id="title">{{ $post->title }}</h1>
+        <h5 id="author">By {{ $post->user->name . ' - ' . $post->created_at->diffForHumans() }}</h5>
+        <p id="post-body">{{ $post->body }}</p>
+        <input type="hidden" name="id" id="id" value="{{ $post->id }}">
 
-    @if ($access)
-        <div id="edit">
-            <button onclick="editPost()">Edit</button>
-        </div>
-        <div id="delete">
-            <button onclick="deletePost()">Delete</button>
-        </div>
-    @endif
+        <div class="post-controls d-flex justify-content-start">
+            @if ($access)
+                <div class="edit-post d-flex">
+                    <div id="edit">
+                        <button class="btn mr-2" onclick="editPost()">Edit</button>
+                    </div>
+                    <div id="delete">
+                        <button class="btn" onclick="deletePost()">Delete</button>
+                    </div>
+                </div>
+            @endif
 
-    {{-- Like --}}
-    <div class="likes">
-        <button class="btn btn-danger" id="like-btn" onclick="likePost()">
-        @if ($liked) <i class="fas fa-heart"></i>
-        @else <i class="far fa-heart"></i>
-        @endif
-        </button><label for="like-btn" id="likeCount">{{ $post->likes }}</label>
+            {{-- Like --}}
+            <div class="likes ml-auto">
+                <button class="btn like-btn" id="like-btn" onclick="likePost()">
+                @if ($liked) <i class="fas fa-heart"></i>
+                @else <i class="far fa-heart"></i>
+                @endif
+                </button><label for="like-btn" id="likeCount">{{ $post->likes }}</label>
+            </div>
+
+        </div>
     </div>
 
     {{-- Comments --}}
     <div id="addComment">
-        <textarea name="comment-body" id="comment-body" cols="50" rows="5" maxlength="280"></textarea>
-        <button onclick="commentPost()">Comment</button>
+        <textarea name="comment-body" id="comment-body" cols="50" rows="5" maxlength="280"></textarea><br>
+        <button class="btn" onclick="commentPost()">Comment</button>
     </div>
 
     <div id="commentList">
@@ -62,7 +69,7 @@
                 success: function (data) {
                     $("#post-body").html(data.body);
                     $("#edit").html(`
-                        <button onclick="editPost()">Edit</button>
+                        <button class="btn" onclick="editPost()">Edit</button>
                     `);
                 },
                 error: function(e) {
@@ -75,7 +82,7 @@
             const postBody = document.getElementById('post-body').innerHTML;
             $("#edit").html(`
                 <textarea type="text" name="body" id="body">${postBody}</textarea>
-                <button class="update-btn" onclick="updatePost()">Done</button>
+                <button class="btn update-btn" onclick="updatePost()">Done</button>
             `);
             $("#post-body").html(``)
         }
@@ -101,15 +108,15 @@
 
         function cancelDeletePost() {
             $("#delete").html(`
-                        <button onclick="deletePost()">Delete</button>
+                        <button class="btn" onclick="deletePost()">Delete</button>
                     `);
         }
 
         function deletePost() {
             $("#delete").html(`
                         <p>This will delete the entire thread, it's an irreversible action</p>
-                        <button class="update-btn" onclick="cancelDeletePost()">Cancel</button>
-                        <button class="update-btn" onclick="destroyPost()">Confirm</button>
+                        <button class="btn update-btn" onclick="cancelDeletePost()">Cancel</button>
+                        <button class="btn update-btn" onclick="destroyPost()">Confirm</button>
                     `);
         }
 

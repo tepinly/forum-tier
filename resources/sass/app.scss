@@ -59,3 +59,35 @@ main, html {
     background-color: $palette-4;
     color: $palette-3;
 }
+
+.profile-pic {
+    border: .1rem solid $palette-4;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.btn {
+    background-color: $palette-4;
+    color: $palette-2;
+}
+
+.btn:hover {
+    color: $palette-4;
+    background-color: $palette-2;
+}
+
+.like-btn {
+    background-color: $palette-3;
+    color: $palette-2;
+}
+
+.like-btn:hover {
+    color: $palette-3;
+}
+
+#postList {
+    text-align: center;
+}

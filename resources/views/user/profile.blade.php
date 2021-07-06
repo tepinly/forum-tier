@@ -28,7 +28,7 @@
     <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
     <div class="profile-page">
         <div id="avatar">
-            <img src={{ asset($user->avatar) }} alt="{{ $user->name }}" width="160px">
+            <img  class="profile-pic" src={{ asset($user->avatar) }} alt="{{ $user->name . '\'s avatar' }}" width="160px">
         </div>
         <h1>{{ $user->name }}</h1>
         {{ count($followings) }} Following |

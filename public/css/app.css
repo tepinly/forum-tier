@@ -10054,3 +10054,35 @@ main, html {
   background-color: #132743;
   color: #D7385E;
 }
+
+.profile-pic {
+  border: 0.1rem solid #132743;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.btn {
+  background-color: #132743;
+  color: #EDC988;
+}
+
+.btn:hover {
+  color: #132743;
+  background-color: #EDC988;
+}
+
+.like-btn {
+  background-color: #D7385E;
+  color: #EDC988;
+}
+
+.like-btn:hover {
+  color: #D7385E;
+}
+
+#postList {
+  text-align: center;
+}
