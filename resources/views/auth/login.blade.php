@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
-                <img src="{{ asset('img/ForumTier.svg') }}" width="500rem" height="200rem" style="object-fit: cover" alt="" srcset="">
+                <img src="{{ asset('img/ForumTier.svg') }}" class="logo-large w-75 h-25" alt="ForumTier Logo">
                 <div class="card">
                     <div class="card-body">
                         <form method="POST" action="{{ route('login') }}">

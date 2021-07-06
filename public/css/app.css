@@ -10016,7 +10016,7 @@ main, html {
 .card {
   background-color: #EDC988;
   border: 0;
-  width: 30rem;
+  max-width: 30rem;
   margin: 0 auto;
   padding: 0.2rem 0.1rem;
 }
@@ -10085,4 +10085,9 @@ main, html {
 
 #postList {
   text-align: center;
+}
+
+.logo-large {
+  -o-object-fit: cover;
+     object-fit: cover;
 }

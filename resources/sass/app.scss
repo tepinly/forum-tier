@@ -21,7 +21,7 @@ main, html {
 .card {
     background-color: $palette-2;
     border: 0;
-    width: 30rem;
+    max-width: 30rem;
     margin: 0 auto;
     padding: .2rem .1rem;
 }
@@ -90,4 +90,8 @@ main, html {
 
 #postList {
     text-align: center;
+}
+
+.logo-large {
+    object-fit: cover;
 }
