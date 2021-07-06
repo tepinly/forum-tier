@@ -18,9 +18,43 @@ main, html {
     background-color: $palette-1;
 }
 
+main {
+    padding: 0 2rem;
+}
+
+textarea {
+    padding: .4rem;
+    border: 0;
+    outline: .15rem solid $palette-3;
+    border-radius: .15rem;
+    -webkit-border-radius: .15rem;
+    -moz-border-radius: .15rem;
+    -ms-border-radius: .15rem;
+    -o-border-radius: .15rem;
+}
+
+textarea:focus {
+    outline: .15rem dashed $palette-3;
+}
+
+input {
+    background-color: $palette-2;
+    padding: .4rem;
+    border: 0;
+    outline: .15rem solid $palette-3;
+    border-radius: .2rem;
+    -webkit-border-radius: .2rem;
+    -moz-border-radius: .2rem;
+    -ms-border-radius: .2rem;
+    -o-border-radius: .2rem;
+}
+
+input:focus {
+    outline: .2rem dashed $palette-3;
+}
+
 .card {
     background-color: $palette-2;
-    border: 0;
     max-width: 30rem;
     margin: 0 auto;
     padding: .2rem .1rem;
@@ -57,7 +91,11 @@ main, html {
 
 .post .card-header {
     background-color: $palette-4;
-    color: $palette-3;
+    color: $palette-2;
+}
+
+.post a {
+    text-decoration: none;
 }
 
 .profile-pic {
@@ -88,10 +126,29 @@ main, html {
     color: $palette-3;
 }
 
-#postList {
+.new-post-btn {
     text-align: center;
+    margin: 2rem;
 }
 
 .logo-large {
     object-fit: cover;
+}
+
+.btn-primary {
+    border: .1rem solid $palette-3;
+}
+
+#post-body {
+    padding: .8rem 1rem;
+    background-color: $palette-2;
+}
+
+.post-edit-area {
+    background-color: $palette-2;
+}
+
+.likes label {
+    font-weight: bold;
+    font-size: 1.1rem;
 }

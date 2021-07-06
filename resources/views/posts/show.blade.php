@@ -21,13 +21,13 @@
 
             {{-- Like --}}
             <div class="likes ml-auto">
+                <label for="like-btn" id="likeCount"> {{ $post->likes }}</label>
                 <button class="btn like-btn" id="like-btn" onclick="likePost()">
                 @if ($liked) <i class="fas fa-heart"></i>
                 @else <i class="far fa-heart"></i>
                 @endif
-                </button><label for="like-btn" id="likeCount">{{ $post->likes }}</label>
+                </button>
             </div>
-
         </div>
     </div>
 
@@ -81,10 +81,9 @@
         function editPost() {
             const postBody = document.getElementById('post-body').innerHTML;
             $("#edit").html(`
-                <textarea type="text" name="body" id="body">${postBody}</textarea>
                 <button class="btn update-btn" onclick="updatePost()">Done</button>
             `);
-            $("#post-body").html(``)
+            $("#post-body").html(`<textarea class="post-edit-area" type="text" name="body" id="body" >${postBody}</textarea>`)
         }
 
         function destroyPost() {
@@ -114,7 +113,6 @@
 
         function deletePost() {
             $("#delete").html(`
-                        <p>This will delete the entire thread, it's an irreversible action</p>
                         <button class="btn update-btn" onclick="cancelDeletePost()">Cancel</button>
                         <button class="btn update-btn" onclick="destroyPost()">Confirm</button>
                     `);
@@ -195,7 +193,7 @@
                 })
                 .done(function(response) {
                     if (response.loadedComments.length == 0) {
-                        $('.auto-load').html("You hit the bottom");
+                        $('.auto-load').html("");
                         return;
                     }
                     $('.auto-load').hide();

@@ -10013,9 +10013,43 @@ main, html {
   background-color: #F8EFD4;
 }
 
+main {
+  padding: 0 2rem;
+}
+
+textarea {
+  padding: 0.4rem;
+  border: 0;
+  outline: 0.15rem solid #D7385E;
+  border-radius: 0.15rem;
+  -webkit-border-radius: 0.15rem;
+  -moz-border-radius: 0.15rem;
+  -ms-border-radius: 0.15rem;
+  -o-border-radius: 0.15rem;
+}
+
+textarea:focus {
+  outline: 0.15rem dashed #D7385E;
+}
+
+input {
+  background-color: #EDC988;
+  padding: 0.4rem;
+  border: 0;
+  outline: 0.15rem solid #D7385E;
+  border-radius: 0.2rem;
+  -webkit-border-radius: 0.2rem;
+  -moz-border-radius: 0.2rem;
+  -ms-border-radius: 0.2rem;
+  -o-border-radius: 0.2rem;
+}
+
+input:focus {
+  outline: 0.2rem dashed #D7385E;
+}
+
 .card {
   background-color: #EDC988;
-  border: 0;
   max-width: 30rem;
   margin: 0 auto;
   padding: 0.2rem 0.1rem;
@@ -10052,7 +10086,11 @@ main, html {
 
 .post .card-header {
   background-color: #132743;
-  color: #D7385E;
+  color: #EDC988;
+}
+
+.post a {
+  text-decoration: none;
 }
 
 .profile-pic {
@@ -10083,11 +10121,30 @@ main, html {
   color: #D7385E;
 }
 
-#postList {
+.new-post-btn {
   text-align: center;
+  margin: 2rem;
 }
 
 .logo-large {
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.btn-primary {
+  border: 0.1rem solid #D7385E;
+}
+
+#post-body {
+  padding: 0.8rem 1rem;
+  background-color: #EDC988;
+}
+
+.post-edit-area {
+  background-color: #EDC988;
+}
+
+.likes label {
+  font-weight: bold;
+  font-size: 1.1rem;
 }

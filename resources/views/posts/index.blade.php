@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="new-post-btn">
+        <a href="{{ route('post.create') }}" class="btn">📝 Post</a>
+    </div>
+
     <div id="postList">
-        <div class="new-post-btn">
-            <a href="{{ route('post.create') }}" class="btn">Write your post</a>
-        </div>
         @foreach ($posts as $post)
             <div class="post card">
                 <a href="{{ route('post.show', ['id' => $post->id]) }}">
                     <div class="card-header">
-                        <h5>{{ $post->title }}</h5>
+                        <h5>📌 {{ $post->title }}</h5>
                     </div>
                 </a>
                 <div class="card-body">
