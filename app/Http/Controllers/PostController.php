@@ -30,6 +30,18 @@ class PostController extends Controller
 
         return view('posts.index', compact('posts'));
     }
+    
+    public function show($id) {
+        $post = Post::find($id);
+        if ($post === null) return abort(404, 'Post doesn\'t exist');
+
+        $user = User::firstWhere('id', $post->user->id);
+        $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
+        $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
+        $access =accessLevel($user->id, $post);
+
+        return view('posts.show', compact('post', 'user', 'liked', 'comments', 'access'));
+    }
 
     public function postsFetch($page) {
         $posts = Post::orderBy('created_at', 'DESC')->paginate(5, ['*'], 'page', $page);
@@ -54,17 +66,6 @@ class PostController extends Controller
         ], 200);
     }
 
-    public function show($id) {
-        $post = Post::find($id);
-        if ($post === null) return abort(404, 'Post doesn\'t exist');
-
-        $user = User::firstWhere('id', $post->user->id);
-        $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
-        $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
-        $access =accessLevel($user->id, $post);
-
-        return view('posts.show', compact('post', 'user', 'liked', 'comments', 'access'));
-    }
 
     public function edit($id) {
         return view('posts.edit', [

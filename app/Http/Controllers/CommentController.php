@@ -38,7 +38,7 @@ class CommentController extends Controller
                 $commentList .= '
                     <div class="comment" id="' . $comment->id . '">
                         <div class="comment-header">
-                            <img width="40px" src="'. asset($comment->user->avatar) . '" alt=" ' . $comment->user->name . '">
+                            <img width="40px" class="profile-pic" src="'. asset($comment->user->avatar) . '" alt=" ' . $comment->user->name . '">
                             <p> '. $comment->user->name . ' - ' . $comment->created_at->diffForHumans() . '</p>
                         </div>
                         <p>
