@@ -10229,6 +10229,10 @@ input:focus {
   border: 0.2rem solid #132743;
 }
 
+#userPostList {
+  max-width: 90%;
+}
+
 .page-item {
   background-color: #F8EFD4;
 }

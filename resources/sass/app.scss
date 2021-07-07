@@ -233,6 +233,10 @@ input:focus {
     border: .2rem solid $palette-4;
 }
 
+#userPostList {
+    max-width: 90%;
+}
+
 .page-item {
     background-color: $palette-1;
 }

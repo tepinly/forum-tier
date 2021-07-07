@@ -26,7 +26,7 @@
     </style>
     <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
     <div class="profile-page mt-4 d-flex flex-wrap justify-content-around align-items-start">
-        <div class="profile-info p-5 mb-4 mx-2">
+        <div class="profile-info p-5 mb-4 mx-4">
             <div id="avatar">
                 <img class="profile-pic main-profile-pic" src={{ asset($user->avatar) }}
                     alt="{{ $user->name . '\'s avatar' }}">
@@ -97,17 +97,17 @@
         </div>
 
         {{-- Post list --}}
-        <div id="postList">
+        <div id="userPostList">
             <h3>{{ $postCount . ($postCount === 1 ? ' Post' : ' Posts') }}</h3>
             @foreach ($posts as $post)
                 <div class="mini-post pt-3 px-4 pb-1 mb-4">
                     <h5><a href="{{ route('post.show', ['id' => $post->id]) }}">{{ $post->title }}</a></h5>
                     <p class="mt-3">
                         {{ $post->created_at->diffForHumans() }} <span class="mx-3"> {{ $post->likes }} <i
-                            class="fas fa-heart"></i> </span>
+                                class="fas fa-heart"></i> </span>
                         {{ count($post->comments) . (count($post->comments) === 1 ? ' Comment' : ' Comments') }}
                     </p>
-            </div>
+                </div>
             @endforeach
             {{ $posts->links() }}
         </div>
