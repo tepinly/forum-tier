@@ -97,7 +97,7 @@
             $("#edit").html(`
                 <button class="btn update-btn" onclick="updatePost()">Done</button>
             `);
-            $("#post-body").html(`<textarea name="body" id="body" oninput='this.style.height = "";this.style.height = this.scrollHeight + 3 + "px"'>${postBody}</textarea>`)
+            $("#post-body").html(`<textarea class="post-edit-area" name="body" id="body" oninput='this.style.height = "";this.style.height = this.scrollHeight + 3 + "px"'>${postBody}</textarea>`)
         }
 
         function destroyPost() {
