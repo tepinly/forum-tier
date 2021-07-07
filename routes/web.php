@@ -17,7 +17,6 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    
     // Create Post
     Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
     Route::post('/posts', [PostController::class, 'store'])->name('post.store');
@@ -64,6 +63,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 Route::group(['middleware' => ['auth', 'verified', 'admin']], function () {
     Route::get('/admin', [AdminController::class, 'controlPanel'])->name('admin.control.panel');
+    Route::post('/users/{user_id}/delete', [UserController::class, 'delete'])->name('user.delete');
 });
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
