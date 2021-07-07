@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" />
@@ -26,21 +25,22 @@
 
     </style>
     <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-    <div class="profile-page">
+    <div class="profile-page mt-4">
         <div id="avatar">
-            <img  class="profile-pic" src={{ asset($user->avatar) }} alt="{{ $user->name . '\'s avatar' }}" width="160px">
+            <img class="profile-pic" src={{ asset($user->avatar) }} alt="{{ $user->name . '\'s avatar' }}" width="160px">
         </div>
         <h1>{{ $user->name }}</h1>
         {{ count($followings) }} Following |
         <span id="followers-count">{{ count($followers) }}</span> Followers
         <p id="bio">{{ $user->bio }}</p>
 
+        {{-- Follow prompts --}}
         @if($access < 3)
             <div id="follow-prompt">
                 @if ($following)
-                    <button onclick="unfollow()">Unfollow</button>
+                    <button class="btn" onclick="unfollow()">Unfollow</button>
                 @else
-                    <button onclick="follow()">Follow</button>
+                    <button class="btn" onclick="follow()">Follow</button>
                 @endif
             </div>
         @endif
@@ -48,15 +48,15 @@
         {{-- Edit profile --}}
         @if ($access > 0)
             <div id="bio-change">
-                <button onclick="changeBio()">Update Bio</button>
+                <button class="btn" onclick="changeBio()">Update Bio</button>
             </div>
             <div id="avatar-change">
-                <button onclick="changeAvatar()">Change Avatar</button>
+                <button class="btn" onclick="changeAvatar()">Change Avatar</button>
             </div>
 
             @if ($access == 1)
             <div id="terminate-account">
-                <button onclick="terminatePrompt()">Terminate</button>
+                <button class="btn" onclick="terminatePrompt()">Terminate</button>
             </div>
             @endif
 
@@ -65,7 +65,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalLabel">Adjust image</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn" data-dismiss="modal">Cancel</button>
                             <button type="button" class="btn btn-primary" id="crop">Set</button>
                         </div>
                     </div>
@@ -116,14 +116,14 @@
         function terminatePrompt() {
             $('#terminate-account').html(`
                 Account termination is irreversible.<br>
-                <button onclick="terminateConfirm()">Confirm</button>
-                <button onclick="terminateCancel()">Cancel</button>
+                <button class="btn" onclick="terminateConfirm()">Confirm</button>
+                <button class="btn" onclick="terminateCancel()">Cancel</button>
             `)
         }
 
         function terminateCancel() {
             $('#terminate-account').html(`
-                <button onclick="terminatePrompt()">Terminate</button>
+                <button class="btn" onclick="terminatePrompt()">Terminate</button>
             `)
         }
 
@@ -151,7 +151,7 @@
                 },
                 success: function(data) {
                     $('#follow-prompt').html(`
-                        <button onclick="follow()">Follow</button>
+                        <button class="btn" onclick="follow()">Follow</button>
                     `)
                     $('#followers-count').html(`
                         ${data.followers}
@@ -169,7 +169,7 @@
                 },
                 success: function(data) {
                     $('#follow-prompt').html(`
-                        <button onclick="unfollow()">Unfollow</button>
+                        <button class="btn" onclick="unfollow()">Unfollow</button>
                     `)
                     $('#followers-count').html(`
                         ${data.followers}
@@ -187,7 +187,7 @@
         function changeBio() {
             $('#bio-change').html(`
                 <input type="text" name="bio" class="bio" id="bio-change-input" value=${bio}>
-                <button onclick="updateBio()">Done</button>
+                <button class="btn" onclick="updateBio()">Done</button>
             `)
         }
 
@@ -205,7 +205,7 @@
                 success: function(data) {
                     bio = data.bio;
                     $('#bio-change').html(`
-                        <button id="bio-change-button" onclick="changeBio()">Update Bio</button>
+                        <button class="btn" id="bio-change-button" onclick="changeBio()">Update Bio</button>
                     `)
                     $('#bio').html(`${data.bio}`);
                 },
@@ -270,11 +270,11 @@
                         },
                         success: function(data) {
                             $('#avatar').html(
-                                `<img src={{ asset('${data.newAvatar}') }} width="160px">`
+                                `<img class="profile-pic" src={{ asset('${data.newAvatar}') }} width="160px">`
                             );
                             $('#avatar-change').html(`
                                 New avatar updated<br>
-                                <button onclick="changeAvatar()">Change Avatar</button>
+                                <button class="btn" onclick="changeAvatar()">Change Avatar</button>
                             `);
                             $modal.modal('hide');
                         },
@@ -283,5 +283,4 @@
             });
         });
     </script>
-
 @endsection

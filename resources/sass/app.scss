@@ -12,6 +12,7 @@
     border: 0;
     box-shadow: 0;
     outline: 0;
+    z-index: 10;
 }
 
 main, html {
@@ -20,6 +21,7 @@ main, html {
 
 main {
     padding: 0 2rem;
+    min-height: 50rem;
 }
 
 textarea {
@@ -194,4 +196,14 @@ input:focus {
 
 #post-create-body {
     min-width: 50%;
+}
+
+.footer{
+    background-color: $palette-4;
+}
+
+.footer {
+    border-top: .25rem solid $palette-3;
+    border-bottom: .25rem solid $palette-3;
+    color: $palette-2;
 }
