@@ -125,8 +125,12 @@ input:focus {
 }
 
 .like-btn:hover {
-    color: $palette-2;
-    background-color: $palette-3;
+    background-color: $palette-1;
+    color: $palette-4;
+}
+
+.like-btn:active, .like-btn:focus {
+    box-shadow: none;
 }
 
 .new-post-btn {

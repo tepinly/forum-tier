@@ -10120,8 +10120,12 @@ input:focus {
 }
 
 .like-btn:hover {
-  color: #EDC988;
-  background-color: #D7385E;
+  background-color: #F8EFD4;
+  color: #132743;
+}
+
+.like-btn:active, .like-btn:focus {
+  box-shadow: none;
 }
 
 .new-post-btn {
