@@ -87,5 +87,10 @@
             @yield('content')
         </main>
     </div>
+    <div>
+        <br>
+        " "
+        <br>
+    </div>
 </body>
 </html>
