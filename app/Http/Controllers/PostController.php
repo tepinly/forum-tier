@@ -18,6 +18,8 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        if(!$request->title || !$request->body) return back();
+        
         $post = new Post;
         $post->user_id = Auth::user()->id;
         $post->title = $request->title;
