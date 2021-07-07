@@ -9,7 +9,7 @@
         <div class="card-body">
             <p>
                 By <a href="{{ route('user.profile', ['user_id' => $post->user->id]) }}">{{ $post->user->name }}</a>
-                - {{ $post->created_at->diffForHumans() }} <br> {{ $post->likes }} <i class="fas fa-heart"></i> |
+                - {{ $post->created_at->diffForHumans() }} <br><br> <span class="mx-2">{{ $post->likes }} <i class="fas fa-heart"></i></span>
                 {{ count($post->comments) . (count($post->comments) === 1 ? ' Comment' : ' Comments') }}
             </p>
         </div>

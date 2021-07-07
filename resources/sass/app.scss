@@ -207,3 +207,48 @@ input:focus {
     border-bottom: .25rem solid $palette-3;
     color: $palette-2;
 }
+
+.main-profile-pic {
+    width: 10rem;
+    border: .2rem solid $palette-3;
+}
+
+.profile-info {
+    background-color: $palette-2;
+    border-radius: .3rem;
+    -webkit-border-radius: .3rem;
+    -moz-border-radius: .3rem;
+    -ms-border-radius: .3rem;
+    -o-border-radius: .3rem;
+}
+
+.mini-post {
+    background-color: $palette-2;
+    border-radius: .3rem;
+    word-wrap: break-word;
+    -webkit-border-radius: .3rem;
+    -moz-border-radius: .3rem;
+    -ms-border-radius: .3rem;
+    -o-border-radius: .3rem;
+    border: .2rem solid $palette-4;
+}
+
+.page-item {
+    background-color: $palette-1;
+}
+
+.page-link {
+    background-color: $palette-4;
+    color: $palette-2;
+    border: 0;
+}
+
+.page-link:hover {
+    background-color: $palette-3;
+    color: $palette-2;
+}
+
+.page-item.disabled .page-link {
+    background-color: $palette-1;
+    color: $palette-2;
+}

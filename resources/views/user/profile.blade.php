@@ -25,82 +25,89 @@
 
     </style>
     <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
-    <div class="profile-page mt-4">
-        <div id="avatar">
-            <img class="profile-pic" src={{ asset($user->avatar) }} alt="{{ $user->name . '\'s avatar' }}" width="160px">
-        </div>
-        <h1>{{ $user->name }}</h1>
-        {{ count($followings) }} Following |
-        <span id="followers-count">{{ count($followers) }}</span> Followers
-        <p id="bio">{{ $user->bio }}</p>
+    <div class="profile-page mt-4 d-flex flex-wrap justify-content-around align-items-start">
+        <div class="profile-info p-5 mb-4 mx-2">
+            <div id="avatar">
+                <img class="profile-pic main-profile-pic" src={{ asset($user->avatar) }}
+                    alt="{{ $user->name . '\'s avatar' }}">
+            </div>
+            <h1 class="ml-2">{{ $user->name }}</h1>
+            {{ count($followings) }} Following <span class="mx-2"> | </span>
+            <span id="followers-count">{{ count($followers) }}</span> Followers
+            <p id="bio" class="mt-2">{{ $user->bio }}</p>
 
-        {{-- Follow prompts --}}
-        @if($access < 3)
-            <div id="follow-prompt">
-                @if ($following)
-                    <button class="btn" onclick="unfollow()">Unfollow</button>
-                @else
-                    <button class="btn" onclick="follow()">Follow</button>
-                @endif
-            </div>
-        @endif
-
-        {{-- Edit profile --}}
-        @if ($access > 0)
-            <div id="bio-change">
-                <button class="btn" onclick="changeBio()">Update Bio</button>
-            </div>
-            <div id="avatar-change">
-                <button class="btn" onclick="changeAvatar()">Change Avatar</button>
-            </div>
-
-            @if ($access == 1)
-            <div id="terminate-account">
-                <button class="btn" onclick="terminatePrompt()">Terminate</button>
-            </div>
+            {{-- Follow prompts --}}
+            @if ($access < 3)
+                <div id="follow-prompt" class="d-flex mb-4">
+                    @if ($following)
+                        <button class="btn mr-2" onclick="unfollow()">Unfollow</button>
+                    @else
+                        <button class="btn" onclick="follow()">Follow</button>
+                    @endif
+                </div>
             @endif
 
-            <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalLabel">Adjust image</h5>
-                            <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
+            {{-- Edit profile --}}
+            @if ($access > 0)
+                <div class="d-flex flex-wrap">
+                    <div id="bio-change" class="mt-2 mr-2">
+                        <button class="btn" onclick="changeBio()">Update Bio</button>
+                    </div>
+                    <div id="avatar-change" class="mt-2 mr-2">
+                        <button class="btn" onclick="changeAvatar()">Change Avatar</button>
+                    </div>
+
+                    @if ($access == 1)
+                        <div id="terminate-account">
+                            <button class="btn mt-2" onclick="terminatePrompt()">Terminate</button>
                         </div>
-                        <div class="modal-body">
-                            <div class="img-container">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <img id="image">
+                    @endif
+
+                    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel">Adjust image</h5>
+                                    <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="img-container">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <img id="image">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="preview"></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="preview"></div>
-                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-primary" id="crop">Set</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary" id="crop">Set</button>
-                        </div>
                     </div>
                 </div>
-            </div>
-        @endif
+            @endif
+        </div>
 
         {{-- Post list --}}
         <div id="postList">
-            <h3>{{ count($posts) . (count($posts) === 1 ? ' Post' : ' Posts') }}</h3>
+            <h3>{{ $postCount . ($postCount === 1 ? ' Post' : ' Posts') }}</h3>
             @foreach ($posts as $post)
-                <div class="post">
-                    <p>
-                        {{ $post->title }} <br>{{ $post->created_at->diffForHumans() }} | {{ $post->likes }} <i
-                            class="fas fa-heart"></i> |
+                <div class="mini-post pt-3 px-4 pb-1 mb-4">
+                    <h5><a href="{{ route('post.show', ['id' => $post->id]) }}">{{ $post->title }}</a></h5>
+                    <p class="mt-3">
+                        {{ $post->created_at->diffForHumans() }} <span class="mx-3"> {{ $post->likes }} <i
+                            class="fas fa-heart"></i> </span>
                         {{ count($post->comments) . (count($post->comments) === 1 ? ' Comment' : ' Comments') }}
                     </p>
-                </div>
+            </div>
             @endforeach
             {{ $posts->links() }}
         </div>
@@ -115,20 +122,20 @@
 
         function terminatePrompt() {
             $('#terminate-account').html(`
-                Account termination is irreversible.<br>
-                <button class="btn" onclick="terminateConfirm()">Confirm</button>
-                <button class="btn" onclick="terminateCancel()">Cancel</button>
+                <button class="btn mt-2" onclick="terminateCancel()">Cancel</button>
+                <button class="btn mr-2 mt-2" onclick="terminateConfirm()">Confirm</button>
             `)
         }
 
         function terminateCancel() {
             $('#terminate-account').html(`
-                <button class="btn" onclick="terminatePrompt()">Terminate</button>
+                <button class="btn mr-2 mt-2" onclick="terminatePrompt()">Terminate</button>
             `)
         }
 
         function terminateConfirm() {
-            $.ajax ({
+            const userId = document.getElementById('user_id').value;
+            $.ajax({
                 type: 'POST',
                 url: `/users/${userId}/delete`,
                 data: {
@@ -143,7 +150,7 @@
         }
 
         function unfollow() {
-            $.ajax ({
+            $.ajax({
                 type: 'POST',
                 url: `/users/${userId}/unfollow`,
                 data: {
@@ -161,7 +168,7 @@
         }
 
         function follow() {
-            $.ajax ({
+            $.ajax({
                 type: 'POST',
                 url: `/users/${userId}/follow`,
                 data: {
@@ -180,13 +187,13 @@
 
         function changeAvatar() {
             $('#avatar-change').html(`
-                <input type="file" name="image" class="image">
+                <input type="file" name="image" class="image btn">
             `)
         }
 
         function changeBio() {
-            $('#bio-change').html(`
-                <input type="text" name="bio" class="bio" id="bio-change-input" value=${bio}>
+            $('#bio').html(`
+                <input type="text" name="bio" class="bio mr-2 mb-2" id="bio-change-input" value=${bio}>
                 <button class="btn" onclick="updateBio()">Done</button>
             `)
         }
@@ -270,11 +277,11 @@
                         },
                         success: function(data) {
                             $('#avatar').html(
-                                `<img class="profile-pic" src={{ asset('${data.newAvatar}') }} width="160px">`
+                                `<img class="profile-pic main-profile-pic" src={{ asset('${data.newAvatar}') }}>`
                             );
                             $('#avatar-change').html(`
-                                New avatar updated<br>
-                                <button class="btn" onclick="changeAvatar()">Change Avatar</button>
+                                <button class="btn" onclick="changeAvatar()">Change Avatar</button><br>
+                                Avatar updated
                             `);
                             $modal.modal('hide');
                         },

@@ -58,17 +58,17 @@ class PostController extends Controller
         $postList = '';
 
         foreach ($posts as $post) {
-            $postList .= '<div class="post card mt-3">
+            $postList .= '<div class="post card mt-5">
             <input type="hidden" name="id" id="post-id" value="' . $post->id . '">
             <a href="' . route("post.show", ["id" =>  $post->id ]) . '">
                 <div class="card-header">
-                    <h5>📌 ' . $post->title . '</h5>
+                    <h5>' . $post->title . '</h5>
                 </div>
             </a>
             <div class="card-body">
                 <p>
                     By <a href="' . route("user.profile", ["user_id" => $post->user->id]) . '">' . $post->user->name . '</a>
-                    - ' . $post->created_at->diffForHumans() . ' <br> ' . $post->likes . ' <i class="fas fa-heart"></i> |
+                    - ' . $post->created_at->diffForHumans() . ' <br><br> <span class="mr-3">' . $post->likes . ' <i class="fas fa-heart"></i></span>
                     ' . count($post->comments) . (count($post->comments) === 1 ? ' Comment' : ' Comments') . '
                 </p>
             </div>

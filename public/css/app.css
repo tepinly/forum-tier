@@ -10203,3 +10203,48 @@ input:focus {
   border-bottom: 0.25rem solid #D7385E;
   color: #EDC988;
 }
+
+.main-profile-pic {
+  width: 10rem;
+  border: 0.2rem solid #D7385E;
+}
+
+.profile-info {
+  background-color: #EDC988;
+  border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -ms-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+}
+
+.mini-post {
+  background-color: #EDC988;
+  border-radius: 0.3rem;
+  word-wrap: break-word;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -ms-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+  border: 0.2rem solid #132743;
+}
+
+.page-item {
+  background-color: #F8EFD4;
+}
+
+.page-link {
+  background-color: #132743;
+  color: #EDC988;
+  border: 0;
+}
+
+.page-link:hover {
+  background-color: #D7385E;
+  color: #EDC988;
+}
+
+.page-item.disabled .page-link {
+  background-color: #F8EFD4;
+  color: #EDC988;
+}
