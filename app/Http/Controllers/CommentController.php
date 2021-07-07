@@ -24,7 +24,7 @@ class CommentController extends Controller
             'commentBody' => $comment->body,
             'commentDate' => $comment->created_at->diffForHumans(),
             'commentCount' => Comment::where('post_id', $post->id)->count(),
-            'userName' => $user->name
+            'userName' => $user->name,
         ], 200);
     }
 
@@ -40,7 +40,7 @@ class CommentController extends Controller
                 $commentList .= '
                     <div class="comment my-3" id="' . $comment->id . '">
                         <div class="comment-header d-flex align-items-end">
-                            <a href="http://"><img style="max-width: 3rem" class="profile-pic mr-2" src="'. asset($comment->user->avatar) . '" alt=" ' . $comment->user->name . '">
+                            <a href="/users/' . $comment->user->id . '"><img style="max-width: 3rem" class="profile-pic mr-2" src="'. asset($comment->user->avatar) . '" alt=" ' . $comment->user->name . '">
                             <p> '. $comment->user->name . '</a> - ' . $comment->created_at->diffForHumans() . '</p>
                         </div>
                         <p class="mt-3">
