@@ -66,7 +66,8 @@ Route::group(['middleware' => ['auth', 'verified', 'admin']], function () {
     Route::get('/admin', [AdminController::class, 'controlPanel'])->name('admin.control.panel');
 });
 
-Route::get('/home', [PostController::class, 'index'])->name('posts');
+Route::get('/posts', [PostController::class, 'index'])->name('posts');
+Route::get('/home', [PostController::class, 'index']);
 Route::get('/', [PostController::class, 'index']);
 
 // Fetch Post Pagination
