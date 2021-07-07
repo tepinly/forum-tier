@@ -10021,7 +10021,9 @@ textarea {
   padding: 0.4rem;
   border: 0;
   outline: 0.15rem solid #D7385E;
+  background-color: #EDC988;
   border-radius: 0.15rem;
+  width: inherit;
   -webkit-border-radius: 0.15rem;
   -moz-border-radius: 0.15rem;
   -ms-border-radius: 0.15rem;
@@ -10113,12 +10115,13 @@ input:focus {
 }
 
 .like-btn {
-  background-color: #D7385E;
-  color: #EDC988;
+  background-color: #F8EFD4;
+  color: #D7385E;
 }
 
 .like-btn:hover {
-  color: #D7385E;
+  color: #EDC988;
+  background-color: #D7385E;
 }
 
 .new-post-btn {
@@ -10138,13 +10141,49 @@ input:focus {
 #post-body {
   padding: 0.8rem 1rem;
   background-color: #EDC988;
+  word-wrap: break-word;
+  border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -ms-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+}
+
+#comment-body {
+  min-width: 75%;
 }
 
 .post-edit-area {
-  background-color: #EDC988;
+  width: 100%;
+}
+
+#post-container {
+  min-width: 40%;
 }
 
 .likes label {
   font-weight: bold;
   font-size: 1.1rem;
+}
+
+#commentList {
+  max-width: 40rem;
+  overflow: auto;
+}
+
+.comment {
+  background-color: #EDC988;
+  padding: 0.6rem 1rem;
+  padding-right: 2rem;
+  padding-bottom: 0.1rem;
+  word-wrap: break-word;
+  border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -ms-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+}
+
+#post-create-body {
+  max-width: 60rem;
 }
