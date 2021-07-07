@@ -256,3 +256,7 @@ input:focus {
     background-color: $palette-1;
     color: $palette-2;
 }
+
+#title {
+    word-wrap: break-word;
+}

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="post-comments d-flex flex-wrap justify-content-between">
-        <div id="post-container">
+        <div id="post-container" class="mx-4">
             <h1 id="title">{{ $post->title }}</h1>
             <p id="author">By <a href="{{ route('user.profile', ['user_id' => $post->user->id]) }}">{{ $post->user->name }}</a> - {{ $post->created_at->diffForHumans() }}</p>
             <p id="post-body">{{ $post->body }}</p>

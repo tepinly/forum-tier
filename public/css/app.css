@@ -10252,3 +10252,7 @@ input:focus {
   background-color: #F8EFD4;
   color: #EDC988;
 }
+
+#title {
+  word-wrap: break-word;
+}
