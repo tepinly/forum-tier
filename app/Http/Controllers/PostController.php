@@ -39,8 +39,9 @@ class PostController extends Controller
         $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
         $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
         $access =accessLevel($user->id, $post);
+        $commentCount = Comment::where(['post_id' => $post->id])->count();
 
-        return view('posts.show', compact('post', 'user', 'liked', 'comments', 'access'));
+        return view('posts.show', compact('post', 'user', 'liked', 'comments', 'commentCount', 'access'));
     }
 
     public function postsFetch($page) {

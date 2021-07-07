@@ -70,7 +70,7 @@ Route::get('/home', [PostController::class, 'index'])->name('posts');
 Route::get('/', [PostController::class, 'index']);
 
 // Fetch Post Pagination
-Route::post('/posts/fetch/{page}', [PosttController::class, 'postsFetch'])->name('posts.fetch');
+Route::post('/posts/fetch/{page}', [PostController::class, 'postsFetch'])->name('posts.fetch');
 
 // User Followers Index
 Route::get('/users/{user_id}/followers', [FriendController::class, 'followers'])->name('user.followers');
