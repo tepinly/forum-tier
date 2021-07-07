@@ -16,9 +16,8 @@ if (!function_exists('isFollowing')) {
 if (!function_exists('accessLevel')) {
     function accessLevel($user_id, $post = null, $comment = null) {
         $user = User::firstWhere('id', $user_id);
-        if (Auth::user()->id == $user_id) $access = 3;
-        elseif ($user->roles->first() != null) $access = $user->roles->first()->id;
-        else $access = 0;
-        return $access;
+        if (Auth::user()->id == $user_id) return 3;
+        if (Auth::user()->roles->first() != null) return Auth::user()->roles->first()->id;
+        return 0;
     }
 }
