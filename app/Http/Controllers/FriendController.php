@@ -11,7 +11,7 @@ class FriendController extends Controller
 {
     public function followers($user_id) {
         $user = User::firstWhere('id', $user_id);
-        $followers = Friend::where('user_id', $user->id)->get();
+        $followers = Friend::where('friend_id', $user->id)->get();
 
         return view('user/followers', [
             'user' => $user,
@@ -21,7 +21,7 @@ class FriendController extends Controller
 
     public function following($user_id) {
         $user = User::firstWhere('id', $user_id);
-        $followings = Friend::where('friend_id', $user->id)->get();
+        $followings = Friend::where('user_id', $user->id)->get();
 
         return view('user/following', [
             'user' => $user,

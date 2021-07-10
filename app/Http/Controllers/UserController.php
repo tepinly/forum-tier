@@ -16,13 +16,13 @@ class UserController extends Controller
         if ($user === null) abort(404, 'User doesn\'t exist');
 
         $posts = Post::where('user_id', $user_id)->with('comments')->orderBy('created_at', 'DESC')->simplePaginate(5);
-        $followings = Friend::where('user_id', $user->id)->get();
-        $followers = Friend::where('friend_id', $user->id)->get();
+        $followers = Friend::where('user_id', $user->id)->get();
+        $followings = Friend::where('friend_id', $user->id)->get();
         $access = accessLevel($user->id);
-        $following = isFollowing(Auth::user()->id, $user->id) ? True : False;
+        $isFollowing = isFollowing(Auth::user()->id, $user->id) ? True : False;
         $postCount = Post::where('user_id', $user_id)->count();
 
-        return view('user.profile', compact('posts', 'user', 'followings', 'followers', 'access', 'following', 'postCount'));
+        return view('user.profile', compact('posts', 'user', 'followings', 'followers', 'access', 'isFollowing', 'postCount'));
     }
 
     public function updateAvatar(Request $request)
