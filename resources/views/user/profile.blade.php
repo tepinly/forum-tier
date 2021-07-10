@@ -26,19 +26,20 @@
     </style>
     <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
     <div class="profile-page mt-4 d-flex flex-wrap justify-content-around align-items-start">
-        <div class="profile-info p-5 mb-4 mx-4">
+        <div class="profile-info p-5 mb-4 mx-4 text-center">
             <div id="avatar">
-                <img class="profile-pic main-profile-pic" src={{ asset($user->avatar) }}
+                <img class="profile-pic main-profile-pic mx-auto" src={{ asset($user->avatar) }}
                     alt="{{ $user->name . '\'s avatar' }}">
             </div>
             <h1 class="ml-2">{{ $user->name }}</h1>
-            {{ count($followings) }} Following <span class="mx-2"> | </span>
-            <span id="followers-count">{{ count($followers) }}</span> Followers
+            <span class="follow-count">{{ count($followings) }}</span> <a href="{{ route('user.following', ['user_id' => $user->id]) }}">Following </a>
+            <span class="mx-2"> </span>
+            <span class="follow-count">{{ count($followers) }}</span> <a href="{{ route('user.followers', ['user_id' => $user->id]) }}">Followers </a>
             <p id="bio" class="mt-2">{{ $user->bio }}</p>
 
             {{-- Follow prompts --}}
             @if ($access < 3)
-                <div id="follow-prompt" class="d-flex mb-4">
+                <div id="follow-prompt" class="d-flex mb-4 justify-content-center">
                     @if ($following)
                         <button class="btn mr-2" onclick="unfollow()">Unfollow</button>
                     @else
@@ -49,7 +50,7 @@
 
             {{-- Edit profile --}}
             @if ($access > 0)
-                <div class="d-flex flex-wrap">
+                <div class="d-flex flex-wrap justify-content-center">
                     <div id="bio-change" class="mt-2 mr-2">
                         <button class="btn" onclick="changeBio()">Update Bio</button>
                     </div>

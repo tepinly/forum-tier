@@ -254,9 +254,17 @@ input:focus {
 
 .page-item.disabled .page-link {
     background-color: $palette-1;
-    color: $palette-2;
+    color: $palette-3;
 }
 
 #title {
     word-wrap: break-word;
+}
+
+#tepinly {
+    text-shadow: 0 0 .4rem black;
+}
+
+.follow-count {
+    font-weight: bold;
 }

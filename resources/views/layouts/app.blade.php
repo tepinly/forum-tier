@@ -93,7 +93,7 @@
     </div>
 
     <div class="footer pl-4 py-3 mt-4">
-        ⚡ Powered by <a href="https://youssef-fadel.herokuapp.com" target="_blank">Tepinly</a>
+        Owned by <a href="https://youssef-fadel.herokuapp.com" target="_blank" id="tepinly">Tepinly</a>
     </div>
 
     <div class="bottom">

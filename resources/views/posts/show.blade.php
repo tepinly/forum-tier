@@ -167,8 +167,8 @@
                     $(".comments-fetched").prepend(`
                     <div class="comment my-3" id="${data.commentId}">
                         <div class="comment-header d-flex align-items-end">
-                            <a href="http://"><img style="max-width: 3rem" class="profile-pic mr-2" src="{{ asset($user->avatar) }}" alt="${data.userName}'s avatar">
-                            <p>${data.userName}</a> - ${data.commentDate}</p>
+                            <a href="{{ route('user.profile', ['user_id' => Auth::user()->id]) }}"><img style="max-width: 3rem" class="profile-pic mr-2" src="{{ asset(Auth::user()->avatar) }}" alt="${data.userName}'s avatar">
+                            <p>{{ Auth::user()->name }}</a> - ${data.commentDate}</p>
                         </div>
                         <p class="mt-3">
                             ${data.commentBody}

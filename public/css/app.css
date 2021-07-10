@@ -10250,9 +10250,17 @@ input:focus {
 
 .page-item.disabled .page-link {
   background-color: #F8EFD4;
-  color: #EDC988;
+  color: #D7385E;
 }
 
 #title {
   word-wrap: break-word;
+}
+
+#tepinly {
+  text-shadow: 0 0 0.4rem black;
+}
+
+.follow-count {
+  font-weight: bold;
 }
