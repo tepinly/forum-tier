@@ -10098,7 +10098,7 @@ input:focus {
 }
 
 .profile-pic {
-  border: 0.1rem solid #132743;
+  border: 0.15rem solid #132743;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -10206,7 +10206,7 @@ input:focus {
 
 .main-profile-pic {
   width: 10rem;
-  border: 0.2rem solid #D7385E;
+  border: 0.2rem solid #132743;
 }
 
 .profile-info {
@@ -10263,4 +10263,25 @@ input:focus {
 
 .follow-count {
   font-weight: bold;
+}
+
+.follow-panel {
+  background-color: #132743;
+  color: #EDC988;
+  max-width: 16rem;
+  padding: 0.8rem;
+  border-radius: 0.3rem;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -ms-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+}
+
+.follow-profile-pic {
+  border: 0.15rem solid #EDC988;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
