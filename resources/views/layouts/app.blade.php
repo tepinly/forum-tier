@@ -62,13 +62,13 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.profile', ['user_id' => Auth::user()->id]) }}">
-                                    {{ Auth::user()->name }}
-                                </a>
+                                <a href="/" class="nav-link">Home</a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="/" class="nav-link">Home</a>
+                                <a class="nav-link" href="{{ route('user.profile', ['user_id' => Auth::user()->id]) }}">
+                                    {{ Auth::user()->name }}
+                                </a>
                             </li>
 
                             <li class="nav-item">
