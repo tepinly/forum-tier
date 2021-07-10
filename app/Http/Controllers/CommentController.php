@@ -24,7 +24,6 @@ class CommentController extends Controller
             'commentBody' => $comment->body,
             'commentDate' => $comment->created_at->diffForHumans(),
             'commentCount' => Comment::where('post_id', $post->id)->count(),
-            'userName' => $user->name,
         ], 200);
     }
 

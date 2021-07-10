@@ -42,7 +42,7 @@ class PostController extends Controller
         if ($post === null) return abort(404, 'Post doesn\'t exist');
 
         $user = User::firstWhere('id', $post->user->id);
-        $liked = Like::firstWhere(['user_id' => $user->id, 'post_id' => $post->id]) ? true : false;
+        $liked = Like::firstWhere(['user_id' => Auth::user()->id, 'post_id' => $post->id]) ? true : false;
         $comments = Comment::where(['post_id' => $post->id])->orderBy('created_at', 'DESC')->paginate(5);
         $access = accessLevel($user->id, $post);
         $commentCount = Comment::where(['post_id' => $post->id])->count();
