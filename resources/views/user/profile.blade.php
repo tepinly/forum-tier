@@ -32,15 +32,15 @@
                     alt="{{ $user->name . '\'s avatar' }}">
             </div>
             <h1 class="ml-2">{{ $user->name }}</h1>
-            <span class="follow-count">{{ count($followings) }}</span> <a href="{{ route('user.following', ['user_id' => $user->id]) }}">Following </a>
+            <span class="follow-count">{{ count($followers) }}</span> <a href="{{ route('user.following', ['user_id' => $user->id]) }}">Following </a>
             <span class="mx-2"> </span>
-            <span class="follow-count">{{ count($followers) }}</span> <a href="{{ route('user.followers', ['user_id' => $user->id]) }}">Followers </a>
+            <span class="follow-count">{{ count($followings) }}</span> <a href="{{ route('user.followers', ['user_id' => $user->id]) }}">Followers </a>
             <p id="bio" class="mt-2">{{ $user->bio }}</p>
 
             {{-- Follow prompts --}}
             @if ($access < 3)
                 <div id="follow-prompt" class="d-flex mb-4 justify-content-center">
-                    @if ($following)
+                    @if ($isFollowing)
                         <button class="btn mr-2" onclick="unfollow()">Unfollow</button>
                     @else
                         <button class="btn" onclick="follow()">Follow</button>
@@ -194,7 +194,7 @@
 
         function changeBio() {
             $('#bio').html(`
-                <input type="text" name="bio" class="bio mr-2 mb-2" id="bio-change-input" value=${bio}>
+                <input type="text" name="bio" class="bio mx-2 mb-2" id="bio-change-input" value=${bio}>
                 <button class="btn" onclick="updateBio()">Done</button>
             `)
         }
