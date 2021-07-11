@@ -278,7 +278,7 @@
                         },
                         success: function(data) {
                             $('#avatar').html(
-                                `<img class="profile-pic main-profile-pic" src={{ asset('${data.newAvatar}') }}>`
+                                `<img class="profile-pic main-profile-pic mx-auto" src={{ asset('${data.newAvatar}') }}>`
                             );
                             $('#avatar-change').html(`
                                 <button class="btn" onclick="changeAvatar()">Change Avatar</button><br>
