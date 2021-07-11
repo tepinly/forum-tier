@@ -8,8 +8,9 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
-
+// Email Verification
 Auth::routes(['verify' => true]);
 
 Route::get('/email/verify', function () {
@@ -21,6 +22,13 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     // Create Post
@@ -67,11 +75,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/users/{user_id}/follow', [FriendController::class, 'follow'])->name('user.follow');
 });
 
+// Admin routes
 Route::group(['middleware' => ['auth', 'verified', 'admin']], function () {
     Route::get('/admin', [AdminController::class, 'controlPanel'])->name('admin.control.panel');
     Route::post('/users/{user_id}/delete', [UserController::class, 'delete'])->name('user.delete');
 });
 
+// Home page
 Route::get('/posts', [PostController::class, 'index'])->name('posts');
 Route::get('/home', [PostController::class, 'index']);
 Route::get('/', [PostController::class, 'index']);
